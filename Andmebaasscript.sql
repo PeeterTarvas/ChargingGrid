@@ -1,6 +1,6 @@
 CREATE TABLE laadimispunktid (
      id BIGSERIAL NOT NULL,
-     laadimis_punkti_kood VARCHAR(255) NOT NULL ,
+     laadimispunkti_kood VARCHAR(255) NOT NULL,
      voimsus_voltides BIGINT NOT NULL,
      asukoht VARCHAR(255) NOT NULL,
      viimati_hooldatud TIMESTAMP,

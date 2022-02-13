@@ -6,6 +6,8 @@ CREATE TABLE laadimispunktid (
      viimati_hooldatud TIMESTAMP,
      paeva_kasutatud BIGINT NOT NULL,
      kasutamiste_arv BIGINT NOT NULL,
-     olek
-     CONSTRAINT pk_key PRIMARY KEY (id)
+     olek VARCHAR(10) NOT NULL,
+     registreerimise_aeg TIMESTAMP DEFAULT LOCALTIMESTAMP,
+     CONSTRAINT pk_key PRIMARY KEY (id),
+
 )

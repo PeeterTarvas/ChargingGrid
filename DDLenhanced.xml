@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<RefData version="1.0" exporter="EA.25">
+	<DataSet name="DDL enhanced_Transform_Template" table="t_template" filter="TemplateType='#TemplateType#' and TemplateName='#TemplateName#' and Style='#Style#'" stoplist=";TemplateID;">
+		<DataRow>
+			<Column name="TemplateID" value="{9392037D-35A2-41c8-9A47-A4B4AD82D6ED}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="File"/>
+			<Column name="Template" value="%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;Initialize&quot;, genOptDefaultDatabase)%
+%list=&quot;Namespace&quot; @separator=&quot;\n\n&quot; @indent=&quot;  &quot; %"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{196A4D29-1DD0-4f8d-B5B0-D8034DDB2E1E}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class"/>
+			<Column name="Template" value="%if classStereotype == &quot;enumeration&quot; or classStereotype == &quot;singleton&quot;%
+%endTemplate%
+
+%if classAbstract == &quot;T&quot;%
+%endTemplate%
+
+
+Table
+{
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;StoreCurrentTable&quot;, classGUID)%
+  %TRANSFORM_REFERENCE(&quot;Table&quot;)%
+  %TRANSFORM_CURRENT(&quot;language&quot;, &quot;stereotype&quot;)%
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, className, &quot;&quot;)%%qt%
+  language=%qt%%genOptDefaultDatabase%%qt%
+  %list=&quot;Attribute&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; %
+  %list=&quot;Connector__InheritedAttributes&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; connectorType == &quot;Generalization&quot; %
+  %list=&quot;Connector__ForeignKeyColumns&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; connectorType != &quot;Generalization&quot; and connectorIsAssociationClass != &quot;T&quot; %
+
+  PrimaryKey
+  {
+ %if classIsAssociationClass == &quot;T&quot;%
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetAssociationClassPrimaryKeyColumnsString&quot;, classGUID)%
+ %elseIf elemType == &quot;Association&quot;%
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetNAryAssociationPrimaryKeyColumnsString&quot;, classGUID)%
+ %else%
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetPrimaryKeyColumnsString&quot;, classGUID)%
+ %endIf%
+  }
+}
+%list=&quot;Connector__Generalization&quot; @separator=&quot;\n&quot; connectorType == &quot;Generalization&quot; %
+%list=&quot;Connector__AssociationClass&quot; @separator=&quot;\n&quot; connectorIsAssociationClass == &quot;T&quot;%
+%list=&quot;Connector&quot; @separator=&quot;\n&quot;%
+%list=&quot;Attribute__Multivalue&quot; @separator=&quot;\n&quot; attUpperBound != &quot;0&quot; and attUpperBound != &quot;1&quot; or attCollection == &quot;T&quot;%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{A3797109-B807-4d15-BF88-D906C4DCD654}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Attribute"/>
+			<Column name="Template" value="%if attUpperBound != &quot;0&quot; and attUpperBound != &quot;1&quot; or attCollection == &quot;T&quot;%
+%endTemplate%
+
+
+Column
+{
+  %TRANSFORM_CURRENT(&quot;type&quot;, &quot;stereotype&quot;, &quot;collection&quot;, &quot;constant&quot;, &quot;containment&quot;, &quot;ordered&quot;, &quot;static&quot;, &quot;volatile&quot;, &quot;name&quot;)%
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, attName, &quot;T&quot;)%%qt%
+  type=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertDBDataType&quot;, attType)%%qt%
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUniqueIfApplicable&quot;, attGUID)%
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkNotNullIfApplicable&quot;, attGUID)%
+  %if attInitial != &quot;&quot;%
+  Default=%qt%%attInitial%%qt%
+  %endIf%
+}"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{1350EBBB-E2E7-41ba-AD19-7E502F5802B8}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Attribute__Multivalue"/>
+			<Column name="Template" value="%if attUpperBound == &quot;0&quot; or attUpperBound == &quot;1&quot; and attCollection != &quot;T&quot;%
+%endTemplate%
+
+
+$FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, classGUID, &quot;&quot;)%
+Table
+{
+  %TRANSFORM_REFERENCE(&quot;MultivalueAttributeTable&quot;, attGUID)%
+  $tableName = %className% + &quot;_&quot; + %attName%
+  $tableName = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, $tableName, &quot;&quot;)%
+  name=%qt%$tableName%qt%
+  language=%qt%%genOptDefaultDatabase%%qt%
+  
+  %if attAllowDuplicates == &quot;T&quot;%
+  PrimaryKey
+  {
+ Column
+ {
+  name=%qt%%TO_LOWER($tableName)%_id%qt%
+  type=%qt%%CONVERT_TYPE(genOptDefaultDatabase, &quot;Integer&quot;)%%qt% 
+ }
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsStringWithConstrs&quot;, classGUID, &quot;&quot;, &quot;T&quot;, &quot;&quot;)%
+  Column
+  {
+ name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, attName, &quot;T&quot;)%%qt%
+ type=%qt%%CONVERT_TYPE(genOptDefaultDatabase, attType)%%qt% 
+ NotNull
+  } 
+  %else%
+  PrimaryKey
+  {
+ $FKColumns
+   Column
+ {
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, attName, &quot;T&quot;)%%qt%
+  type=%qt%%CONVERT_TYPE(genOptDefaultDatabase, attType)%%qt% 
+ }
+  }
+  %endIf%
+}
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK&quot;, attGUID)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;MultivalueAttributeTable&quot;, attGUID)%
+    multiplicity=&quot;0..*&quot;
+ $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;, classGUID)%
+ multiplicity=&quot;1&quot;
+ $FKColumns
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, classGUID, &quot;&quot;)%
+}"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{79013523-939C-42f9-A98B-BAC5C585B712}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Namespace"/>
+			<Column name="Template" value="%if packageHasGenClasses == &quot;T&quot;%
+Package
+{
+  name=%qt%%packageName% (transformed)%qt%
+  namespaceroot=&quot;false&quot;
+  %list=&quot;Namespace&quot; @separator=&quot;\n\n&quot;%
+  %list=&quot;Class&quot; @separator=&quot;\n\n&quot;%
+  %list=&quot;Class__Singleton&quot; @separator=&quot;\n\n&quot;%
+}
+%else%
+%list=&quot;Namespace&quot; @separator=&quot;\n\n&quot;%
+%endIf%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{B0B9AE61-2C68-4e3b-97A4-4A2D1D8562F1}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Connector"/>
+			<Column name="Template" value="%if connectorType == &quot;Generalization&quot; or connectorIsAssociationClass == &quot;T&quot;%
+%endTemplate%
+
+%if connectorType != &quot;Association&quot; and connectorType != &quot;Aggregation&quot;%
+%endTemplate%
+
+
+%if connectorDestElemType == &quot;Association&quot;%
+$destMultiple = &quot;T&quot;
+$dstMult = &quot;0..*&quot;
+$srcMult = %connectorSourceMultiplicity%
+%elseIf connectorSourceElemType == &quot;Association&quot;%
+$sourceMultiple = &quot;T&quot;
+$srcMult = &quot;0..*&quot;
+$dstMult = %connectorDestMultiplicity%
+%else%
+$srcMult = %connectorSourceMultiplicity%
+$dstMult = %connectorDestMultiplicity%
+%if $srcMult != &quot;&quot; and $srcMult != &quot;0&quot; and $srcMult != &quot;0..1&quot; and $srcMult != &quot;1&quot;%
+$sourceMultiple = &quot;T&quot;
+%endIf%
+%if $dstMult != &quot;&quot; and $dstMult != &quot;0&quot; and $dstMult != &quot;0..1&quot; and $dstMult != &quot;1&quot;%
+$destMultiple = &quot;T&quot;
+%endIf%
+%endIf%
+
+%if $srcMult == &quot;&quot;%
+$srcMult = &quot;1&quot;
+%endIf%
+
+%if $dstMult == &quot;&quot;%
+$dstMult = &quot;1&quot;
+%endIf%
+
+%if $srcMult == &quot;0&quot; or $dstMult == &quot;0&quot;%
+%endTemplate%
+
+
+%if classGUID == connectorSourceElemGUID %
+$thisMultiple = $sourceMultiple
+$otherMultiple = $destMultiple
+%else%
+$thisMultiple = $destMultiple
+$otherMultiple = $sourceMultiple
+%endIf%
+
+$otherEndSingleton = %PROCESS_END_OBJECT(&quot;Class__IsSingleton&quot;)%
+%if $otherEndSingleton == &quot;T&quot; and $otherMultiple == &quot;T&quot; %
+%endTemplate%
+%if classStereotype == &quot;singleton&quot; and $thisMultiple == &quot;T&quot; %
+%endTemplate%
+%if $otherEndSingleton == &quot;T&quot; and $thisMultiple != &quot;T&quot; %
+%endTemplate%
+%if classStereotype == &quot;singleton&quot; and $otherMultiple != &quot;T&quot; %
+%endTemplate%
+
+
+%if $sourceMultiple == &quot;T&quot; and $destMultiple == &quot;T&quot;%
+Table
+{
+  %TRANSFORM_REFERENCE(&quot;LinkTable&quot;,connectorGUID)%
+%if connectorName != &quot;&quot;%
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, connectorName, &quot;&quot;)%%qt%
+%else%
+  $combinedName = %connectorSourceElemName% + &quot;_&quot; + %connectorDestElemName%
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, $combinedName, &quot;&quot;)%%qt%
+%endIf%
+  language=%qt%%genOptDefaultDatabase%%qt%
+  
+  PrimaryKey
+  {
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetLinkTablePrimaryKeyColumnsString&quot;, connectorGUID)%
+  }
+}
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK1&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;LinkTable&quot;,connectorGUID)%
+    multiplicity=%qt%$srcMult%qt%
+ $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+ multiplicity=&quot;1&quot;
+    $FKColumns
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorDestElemGUID, connectorGUID)%
+}
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK2&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorSourceElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;LinkTable&quot;,connectorGUID)%
+    multiplicity=%qt%$dstMult%qt%
+    $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+ multiplicity=&quot;1&quot;
+    $FKColumns
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorSourceElemGUID, connectorGUID)%
+}
+%elseIf $sourceMultiple == &quot;T&quot;%
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK1&quot;,connectorGUID)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+ %if connectorDestRole != &quot;&quot;%
+ $FKName = &quot;FK_&quot; + %connectorDestRole%
+    $FKName = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, $FKName, &quot;T&quot;)%
+    name=%qt%$FKName%qt%
+ %endIf%
+    multiplicity=%qt%$srcMult%qt%
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, connectorDestRole)%
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+    multiplicity=%qt%$dstMult%qt%
+    %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, &quot;&quot;)%
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorDestElemGUID, connectorGUID)%
+}
+%elseIf $destMultiple == &quot;T&quot;%
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK1&quot;,connectorGUID)%
+  
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+ %if connectorSourceRole != &quot;&quot;%
+ $FKName = &quot;FK_&quot; + %connectorSourceRole%
+    $FKName = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, $FKName, &quot;T&quot;)%
+    name=%qt%$FKName%qt%
+ %endIf%
+    multiplicity=%qt%$dstMult%qt%
+    %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorSourceElemGUID, connectorSourceRole)%
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+    multiplicity=%qt%$srcMult%qt%
+    %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorSourceElemGUID, &quot;&quot;)%
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorSourceElemGUID, connectorGUID)%
+}
+%else%
+%if $srcMult == &quot;0..1&quot; and $dstMult == &quot;1&quot;%
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+    multiplicity=&quot;0..1&quot;
+ $FKColumns 
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+    multiplicity=&quot;1&quot;
+ $FKColumns 
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorDestElemGUID, connectorGUID)%
+}
+%elseIf $srcMult == &quot;1&quot; and $dstMult == &quot;0..1&quot;%
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorSourceElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+    multiplicity=&quot;0..1&quot;
+ $FKColumns 
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+    multiplicity=&quot;1&quot;
+ $FKColumns 
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorSourceElemGUID, connectorGUID)%
+}
+%else%
+$fkClassGUID = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetLastChosenFKTable&quot;, connectorGUID)%
+%if $fkClassGUID != &quot;&quot;%
+ %if $fkClassGUID == connectorSourceElemGUID%
+  $pkClassGUID = %connectorDestElemGUID%
+ %else%
+  $pkClassGUID = %connectorSourceElemGUID%
+ %endIf%
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, $pkClassGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,$fkClassGUID)%
+    multiplicity=%qt%$srcMult%qt%
+ $FKColumns 
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,$pkClassGUID)%
+    multiplicity=%qt%$srcMult%qt%
+ $FKColumns 
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, $pkClassGUID, connectorGUID)%
+}
+%endIf%
+%endIf%
+%endIf%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{E42BE56C-CFF1-4b0f-B7FA-2B41B7BB6A35}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class Base"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{4EB75733-DF49-46e8-AAFF-0263EDACBAF4}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class Interface"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{3061CB62-343C-4c11-AED4-992C31F12C15}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Connector__Generalization"/>
+			<Column name="Template" value="%if classGUID != connectorSourceElemGUID%
+%endTemplate%
+
+%if connectorType != &quot;Generalization&quot;%
+%endTemplate%
+
+
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;General&quot;, connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;, connectorSourceElemGUID)%
+    multiplicity=&quot;0..1&quot;
+ $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;, connectorDestElemGUID)%
+    multiplicity=&quot;1&quot;
+ $FKColumns
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorDestElemGUID, connectorGUID)%
+}
+
+%PROCESS_END_OBJECT(&quot;Class__Abstract_Connectors&quot;)%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{D2564B08-199A-46ea-96D2-9352B382BA0A}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Connector__AssociationClass"/>
+			<Column name="Template" value="%if classGUID != connectorSourceElemGUID%
+%endTemplate%
+
+%if connectorIsAssociationClass != &quot;T&quot;%
+%endTemplate%
+
+
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK1&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorSourceElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorAssociationClassElemGUID)%
+    multiplicity=&quot;0..*&quot;
+ $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorSourceElemGUID)%
+    multiplicity=&quot;1&quot;
+ $FKColumns
+  }  
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorSourceElemGUID, connectorGUID)%
+}
+ForeignKey
+{
+  %TRANSFORM_REFERENCE(&quot;FK2&quot;,connectorGUID)%
+  $FKColumns = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsString&quot;, connectorDestElemGUID, &quot;&quot;)%
+  Source
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorAssociationClassElemGUID)%
+    multiplicity=&quot;0..*&quot;
+ $FKColumns
+  }
+  Target
+  {
+    %TRANSFORM_REFERENCE(&quot;Table&quot;,connectorDestElemGUID)%
+    multiplicity=&quot;1&quot;
+ $FKColumns
+  }
+  %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;MarkUpdateDeleteCascadeIfApplicable&quot;, connectorDestElemGUID, connectorGUID)%
+}"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{A9B7D47B-2E72-4887-9621-E24C0F0C9BFC}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Operation"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{3C17CCF1-7EF6-4bdc-9BA7-8EF7D55F4C5C}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Parameter"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{0F4BE532-1261-4474-9D07-9AAE18C3A851}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Connector__ForeignKeyColumns"/>
+			<Column name="Template" value="%if connectorType == &quot;Generalization&quot; or connectorIsAssociationClass == &quot;T&quot;%
+%endTemplate%
+
+%if connectorType != &quot;Association&quot; and connectorType != &quot;Aggregation&quot;%
+%endTemplate%
+
+%if connectorDestElemType == &quot;Association&quot; or connectorSourceElemType == &quot;Association&quot; %
+%endTemplate%
+
+
+%if classGUID == connectorSourceElemGUID %
+$thisMult = %connectorSourceMultiplicity%
+$otherMult = %connectorDestMultiplicity%
+$otherGUID = %connectorDestElemGUID%
+$otherRole = %connectorDestRole%
+%else%
+$thisMult = %connectorDestMultiplicity%
+$otherMult = %connectorSourceMultiplicity%
+$otherGUID = %connectorSourceElemGUID%
+$otherRole = %connectorSourceRole%
+%endIf%
+
+%if $otherMult == &quot;&quot; %
+$otherMult = &quot;1&quot;
+%endIf%
+%if $thisMult == &quot;&quot; %
+$thisMult = &quot;1&quot;
+%endIf%
+
+%if $otherMult != &quot;1&quot; and $otherMult != &quot;0..1&quot; or $otherMult == &quot;0&quot; or $thisMult == &quot;0&quot;%
+%endTemplate%
+
+
+$otherEndSingleton = %PROCESS_END_OBJECT(&quot;Class__IsSingleton&quot;)%
+%if $otherEndSingleton == &quot;T&quot; %
+%if $thisMult == &quot;0..1&quot; or $thisMult == &quot;1&quot; %
+%endTemplate%
+%endIf%
+
+
+%if $otherMult == &quot;0..1&quot; and $thisMult == &quot;0..1&quot;%
+$01to01_logic = &quot;T&quot;
+$isNotNull = &quot;&quot;
+%endIf%
+
+%if $otherMult == &quot;1&quot; and $thisMult == &quot;1&quot;%
+$1to1_logic = &quot;T&quot;
+$isNotNull = &quot;T&quot;
+%endIf%
+
+%if $01to01_logic == &quot;T&quot; or $1to1_logic == &quot;T&quot; %
+$fkClassGUID = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetLastChosenFKTable&quot;, connectorGUID)%
+ %if $fkClassGUID == &quot;&quot;% 
+ $fkClassGUID = %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ChooseFKTable&quot;, connectorGUID)%
+ %endIf%
+ 
+ %if classGUID == $fkClassGUID%
+ %EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsStringWithConstrs&quot;, $otherGUID, &quot;&quot;, $isNotNull, &quot;T&quot;)%
+ %endIf%
+%endTemplate%
+
+
+%if $otherMult == &quot;1&quot; %
+$isNotNull = &quot;T&quot;
+%endIf%
+%if $thisMult == &quot;0..1&quot; %
+$isUnique = &quot;T&quot;
+%endIf%
+
+%if $isNotNull == &quot;T&quot; or $isUnique == &quot;T&quot; %
+ $alias = &quot;&quot;
+ %if $thisMult != &quot;0..1&quot; and $thisMult != &quot;1&quot;%
+ $alias = $otherRole
+ %endIf%
+%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;GetForeignKeyColumnsStringWithConstrs&quot;, $otherGUID, $alias, $isNotNull, $isUnique)%
+%endIf%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{1997ACD8-797E-4861-BC2D-74C64D7A5042}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Connector__InheritedAttributes"/>
+			<Column name="Template" value="%if classGUID != connectorSourceElemGUID%
+%endTemplate%
+
+%if connectorType != &quot;Generalization&quot;%
+%endTemplate%
+
+
+%PROCESS_END_OBJECT(&quot;Class__Abstract_Attributes&quot;)%"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{500F7BD7-C85F-47e8-8DEA-15F4308B7CA0}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class__Abstract_Attributes"/>
+			<Column name="Template" value="%if classAbstract != &quot;T&quot;%
+%endTemplate%
+
+
+%list=&quot;Attribute&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; %
+%list=&quot;Connector__InheritedAttributes&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; connectorType == &quot;Generalization&quot; %"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{E4199B1C-B65D-4fb4-9923-CF44F010D409}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class__Abstract_Connectors"/>
+			<Column name="Template" value="%if classAbstract != &quot;T&quot;%
+%endTemplate%
+
+
+$abstractClassConnectors = %list=&quot;Connector&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; connectorType != &quot;Generalization&quot; %
+%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ProcessAbstractConnectors&quot;, $abstractClassConnectors, classGUID)%
+
+$abstractClassConnectorsToSupertypes = %list=&quot;Connector__Generalization&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; connectorType == &quot;Generalization&quot; %
+%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ProcessAbstractConnectors&quot;, $abstractClassConnectorsToSupertypes, classGUID)% "/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{3B51BCC7-D7C5-41aa-A406-9E74F8B707E7}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class__Singleton"/>
+			<Column name="Template" value="%if classStereotype != &quot;singleton&quot;%
+%endTemplate%
+
+
+Table
+{
+  %TRANSFORM_REFERENCE(&quot;Table&quot;)%
+  %TRANSFORM_CURRENT(&quot;language&quot;, &quot;stereotype&quot;)%
+  name=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertName&quot;, className, &quot;&quot;)%%qt%
+  language=%qt%%genOptDefaultDatabase%%qt%
+  %list=&quot;Attribute&quot; @separator=&quot;\n&quot; @indent=&quot;  &quot; %
+
+  PrimaryKey
+  {  
+ Column 
+ {
+  name=%qt%_id%qt%
+  type=%qt%%EXEC_ADD_IN(&quot;EADDLEnh&quot;, &quot;ConvertDBDataType&quot;, &quot;int&quot;)%%qt%
+  Default=%qt%0%qt%
+ }
+  }
+  
+  Operation
+  {
+ name=%qt%CHK_id%qt%
+ stereotype=%qt%check%qt%
+ code=%qt%_id = 0%qt%
+  }
+}"/>
+		</DataRow>
+		<DataRow>
+			<Column name="TemplateID" value="{8DE75FE7-6BD9-4aad-82FD-A9EECD8BADB6}"/>
+			<Column name="TemplateType" value="DDL enhanced_Transform_Template"/>
+			<Column name="TemplateName" value="Class__IsSingleton"/>
+			<Column name="Template" value="%if classStereotype == &quot;singleton&quot;%
+T
+%endTemplate%"/>
+		</DataRow>
+	</DataSet>
+</RefData>

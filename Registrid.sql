@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS Tootaja_rolli_omamine CASCADE
 
 CREATE TABLE  Riik 
 (
-	 riik_kood  bigint NOT NULL,
+	 riik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood )
 )
@@ -67,7 +67,7 @@ CREATE TABLE  Riik
 CREATE TABLE  Tootaja_roll 
 (
 	 kirjeldus  TEXT	NOT NULL,
-	 tootaja_roll_kood  bigint NOT NULL,
+	 tootaja_roll_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Tootaja_roll  PRIMARY KEY ( tootaja_roll_kood )
 )
@@ -75,7 +75,7 @@ CREATE TABLE  Tootaja_roll
 
 CREATE TABLE  Tootaja_seisundi_liik 
 (
-	 tootaja_seisundi_liik_kood  bigint NOT NULL,
+	 tootaja_seisundi_liik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Tootaja_seisundi_liik  PRIMARY KEY ( tootaja_seisundi_liik_kood )
 )
@@ -83,7 +83,7 @@ CREATE TABLE  Tootaja_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
-	 laadimispunkti_seisundi_liik_kood  bigint NOT NULL,
+	 laadimispunkti_seisundi_liik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood )
 )
@@ -91,7 +91,7 @@ CREATE TABLE  Laadimispunkti_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_kategooria_tyyp 
 (
-	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
+	 laadimispunkti_kategooria_tyyp_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood )
 )
@@ -99,7 +99,7 @@ CREATE TABLE  Laadimispunkti_kategooria_tyyp
 
 CREATE TABLE  Kliendi_seisundi_liik 
 (
-	 kliendi_seisundi_liik_kood  bigint NOT NULL,
+	 kliendi_seisundi_liik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	CONSTRAINT  PK_Kliendi_seisundi_liik  PRIMARY KEY ( kliendi_seisundi_liik_kood )
 )
@@ -107,7 +107,7 @@ CREATE TABLE  Kliendi_seisundi_liik
 
 CREATE TABLE  Isiku_seisundi_liik 
 (
-	 isiku_seisundi_liik_kood  bigint NOT NULL,
+	 isiku_seisundi_liik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	 on_elus  boolean NULL DEFAULT TRUE,
 	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood )
@@ -117,7 +117,7 @@ CREATE TABLE  Isiku_seisundi_liik
 CREATE TABLE  Laadimispunkti_tyyp 
 (
 	 tootaja_seisundi_liik_kood  bigint NULL,
-	 laadimispunkti_tyyp_kood  bigint NOT NULL,
+	 laadimispunkti_tyyp_kood  bigserial NOT NULL,
 	 tootaja_roll_kood  bigint NULL,
 	 riik_kood  bigint NULL,
 	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood )
@@ -126,7 +126,7 @@ CREATE TABLE  Laadimispunkti_tyyp
 
 CREATE TABLE  Laadimispunkti_kategooria 
 (
-	 laadimispunkti_kategooria_kood  bigint NOT NULL,
+	 laadimispunkti_kategooria_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood ),

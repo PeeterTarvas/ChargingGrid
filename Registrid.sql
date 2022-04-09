@@ -160,7 +160,7 @@ CREATE TABLE  Kasutajakonto
 	 isik_id  bigint NOT NULL,
 	 kasutajakonto_id  bigint NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( kasutajakonto_id ),
-	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE No Action ON UPDATE No Action
+	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE
 )
 ;
 

@@ -137,7 +137,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 CREATE TABLE  Isik 
 (
      isik_id  BIGSERIAL NOT NULL,
-	 isikukood  varchar(255)	 NOT NULL,
+	 isikukood  varchar(11)	 NOT NULL,
 	 synni_kp  date NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	 eesnimi  varchar(255)	 NULL,

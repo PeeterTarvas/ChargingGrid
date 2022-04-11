@@ -7,11 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "laadimispunkti_kategooria_tyyp")
+@Table(name = "laadimispunkti_seisundi_liik")
 public class ModelTest {
 
     @Id
-    @Column(name = "laadimispunkti_kategooria_tyyp_kood")
+    @Column(name = "laadimispunkti_seisundi_liik_kood")
     private int kood;
 
     @Column(name = "nimetus")

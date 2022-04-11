@@ -12,11 +12,11 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @NoArgsConstructor
-public class LaadimispunktiSeisundiLiik {
+public class LaadimispunktiKategooriaOmamine {
 
     @Id
-    private int laadimispunkti_seisundi_liik_kood;
+    private Long laadimispunkti_kood;
 
     @Column
-    private String nimetus;
+    private Long klassifikaatori_kood;
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface TestRepo extends JpaRepository<ModelTest, Integer> {
 
-    Integer findModelTestByKood(Integer kood);
+    Integer findAllBylaadimispunkti_seisundi_liik_kood(Integer kood);
 
 }

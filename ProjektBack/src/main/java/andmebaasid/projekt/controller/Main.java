@@ -23,7 +23,7 @@ public class Main {
 
     @GetMapping(path = "/testConn")
     public Integer testModel() {
-        return test.findModelTestByKood(1);
+        return test.findAllBylaadimispunkti_seisundi_liik_kood(1);
     }
 
 }

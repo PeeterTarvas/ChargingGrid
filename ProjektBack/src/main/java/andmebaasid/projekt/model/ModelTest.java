@@ -14,7 +14,6 @@ public class ModelTest {
     @Column(name = "laadimispunkti_kategooria_tyyp_kood")
     private int kood;
 
-
     @Column(name = "nimetus")
     private String nimetus;
 

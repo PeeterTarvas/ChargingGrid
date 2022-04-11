@@ -1,7 +1,7 @@
 package andmebaasid.projekt.controller;
 
 
-import andmebaasid.projekt.repositories.TestRepo;
+import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Main {
 
     @Autowired
-    private TestRepo test;
+    private LaadimispunktiSeisundiLiikRepository test;
 
 
     @GetMapping(path = "/test")
@@ -23,7 +23,7 @@ public class Main {
 
     @GetMapping(path = "/testConn")
     public Integer testModel() {
-        return test.findAllBylaadimispunkti_seisundi_liik_kood(1);
+        return test.findBylaadimispunkti_seisundi_liik_kood(1);
     }
 
 }

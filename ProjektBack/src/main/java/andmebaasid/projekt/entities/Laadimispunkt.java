@@ -15,7 +15,6 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Laadimispunkt {
 
-
     @Id
     private Long laadimispunkti_kood;
 

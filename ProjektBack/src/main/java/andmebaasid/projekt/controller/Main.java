@@ -26,5 +26,4 @@ public class Main {
     public LaadimispunktiSeisundiLiik testModel() {
         return test.findByLaadimispunktiSeisundiLiikKood(1);
     }
-
 }

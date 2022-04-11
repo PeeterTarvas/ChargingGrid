@@ -14,10 +14,9 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @NoArgsConstructor
-public class LaadimisPunktiSeisundiLiik {
+public class LaadimispunktiSeisundiLiik {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int laadimispunkti_seisundi_liik_kood;
 
     @Column

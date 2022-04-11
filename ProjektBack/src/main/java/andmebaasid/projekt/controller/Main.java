@@ -1,6 +1,7 @@
 package andmebaasid.projekt.controller;
 
 
+import andmebaasid.projekt.entities.LaadimispunktiSeisundiLiik;
 import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,8 @@ public class Main {
     }
 
     @GetMapping(path = "/testConn")
-    public Integer testModel() {
-        return test.findBylaadimispunkti_seisundi_liik_kood(1);
+    public LaadimispunktiSeisundiLiik testModel() {
+        return test.findByLaadimispunktiSeisundiLiikKood(1);
     }
 
 }

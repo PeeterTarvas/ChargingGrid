@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Laadimispunkt} from "./laadimispunkt";
+import {Laadimispunkt} from "../model/laadimispunkt";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
@@ -12,7 +12,7 @@ export class LaadimispunktServiceService {
 
 
 
-  getAll(): Observable<Laadimispunkt[]> {
-    return this.http.get<Laadimispunkt[]>('laadimispunkt');
+  getAll(): Observable<Array<Laadimispunkt>> {
+    return this.http.get<Array<Laadimispunkt>>('laadimispunkt');
   }
 }

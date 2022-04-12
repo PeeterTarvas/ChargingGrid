@@ -2,6 +2,7 @@ package andmebaasid.projekt.controller;
 
 import andmebaasid.projekt.entities.Laadimispunkt;
 import andmebaasid.projekt.repositories.LaadimispunktRepository;
+import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,27 +16,26 @@ import java.util.List;
 public class LaadimispunktController {
 
     @Autowired
-    private LaadimispunktRepository laadimispunktRepository;
+    private LaadimispunktiService laadimispunktiService;
+
 
     @GetMapping
     public List<Laadimispunkt> getAllLaadimispunkt() {
-        return laadimispunktRepository.findAll();
+        return laadimispunktiService.getALlLaadimispunkt();
     }
 
     @GetMapping("/{id}")
     public Laadimispunkt getLaadimispunktWithId(@PathVariable Long id) {
-        return laadimispunktRepository.findByLaadimispunktiKood(id);
+        return laadimispunktiService.getLaadimispunktWithId(id);
     }
 
-    // TODO
     @GetMapping("/active")
     public List<Laadimispunkt> getAllActiveLaadimispunkt() {
-        return laadimispunktRepository.findAll();
+        return laadimispunktiService.getAllActiveLaadimispunkt();
     }
 
-    // TODO
     @GetMapping("/inactive")
     public List<Laadimispunkt> getAllInActiveLaadimispunkt() {
-        return laadimispunktRepository.findAll();
+        return laadimispunktiService.getAllInactiveLaadimispunkt();
     }
 }

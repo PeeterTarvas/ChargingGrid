@@ -109,7 +109,6 @@ CREATE TABLE  Isiku_seisundi_liik
 (
 	 isiku_seisundi_liik_kood  bigserial NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
-	 on_elus  boolean NULL DEFAULT TRUE,
 	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood )
 )
 ;

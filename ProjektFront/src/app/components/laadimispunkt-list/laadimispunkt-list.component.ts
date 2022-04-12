@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Laadimispunkt} from "../../model/laadimispunkt";
 import {Router} from "@angular/router";
-import {LaadimispunktServiceService} from "../../model/laadimispunkt-service.service";
+import {LaadimispunktServiceService} from "../../service/laadimispunkt-service.service";
 
 @Component({
   selector: 'app-laadimispunkt-list',
@@ -10,21 +10,17 @@ import {LaadimispunktServiceService} from "../../model/laadimispunkt-service.ser
 })
 export class LaadimispunktListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'sectorCode', 'actions'];
+  displayedColumns: string[] = ['laadimispunkti_kood', 'laiuskraad', 'nimetus', 'pikkuskraad', 'reg_aeg', 'registreerija_id', 'laadimispunkti_seisundi_liik_kood', 'laadimispunkti_tyyp_id: string;']
   dataSource: Laadimispunkt[] = [];
 
   constructor(private router: Router, private laadimispunktService: LaadimispunktServiceService) {}
 
   ngOnInit() {
-    this.laadimispunktService.getAll().subscribe(buildings => this.dataSource = buildings);
+    this.laadimispunktService.getAll();
   }
 
-  navigateToBuildingById(id: bigint) {
-    this.router.navigate(['/building/', id]).then(r => r);
-  }
-
-  navigateToBuildingNew() {
-    this.router.navigate(['/building/new']);
+  navigateToLaadimispunktById(id: bigint) {
+    this.router.navigate(['/laadimispunkt/', id]).then(r => r);
   }
 
 }

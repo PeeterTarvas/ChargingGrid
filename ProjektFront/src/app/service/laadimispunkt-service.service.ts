@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Laadimispunkt} from "./laadimispunkt";
+import {Laadimispunkt} from "../model/laadimispunkt";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 

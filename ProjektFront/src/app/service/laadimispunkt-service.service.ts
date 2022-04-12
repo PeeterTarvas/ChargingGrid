@@ -12,7 +12,7 @@ export class LaadimispunktServiceService {
 
 
 
-  getAll(): Observable<Laadimispunkt[]> {
-    return this.http.get<Laadimispunkt[]>('laadimispunkt');
+  getAll(): Observable<Array<Laadimispunkt>> {
+    return this.http.get<Array<Laadimispunkt>>('laadimispunkt');
   }
 }

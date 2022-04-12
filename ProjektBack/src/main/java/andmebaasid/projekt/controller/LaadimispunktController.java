@@ -6,6 +6,7 @@ import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +38,10 @@ public class LaadimispunktController {
     @GetMapping("/inactive")
     public List<Laadimispunkt> getAllInActiveLaadimispunkt() {
         return laadimispunktiService.getAllInactiveLaadimispunkt();
+    }
+
+    @PutMapping("/{id}/{status}")
+    public void setLaadimispunktiSeisundiLiik(@PathVariable Long id, @PathVariable String status) {
+        laadimispunktiService.setLaadimispunktiSeisundiLiik(id, status);
     }
 }

@@ -10,4 +10,7 @@ public interface LaadimispunktiSeisundiLiikRepository extends JpaRepository<Laad
 
     @Query("SELECT l FROM LaadimispunktiSeisundiLiik l WHERE l.laadimispunkti_seisundi_liik_kood = :kood")
     LaadimispunktiSeisundiLiik findByLaadimispunktiSeisundiLiikKood(Long kood);
+
+    @Query("SELECT l.laadimispunkti_seisundi_liik_kood FROM LaadimispunktiSeisundiLiik l WHERE l.nimetus = :status")
+    Long findIdByStatus(String status);
 }

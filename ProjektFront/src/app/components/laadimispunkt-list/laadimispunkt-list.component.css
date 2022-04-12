@@ -1,6 +1,7 @@
 table {
   width: 100%;
   min-width: 50em;
+  height: auto;
 }
 
 .data-table {

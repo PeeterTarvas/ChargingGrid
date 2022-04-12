@@ -10,13 +10,13 @@ import {LaadimispunktServiceService} from "../../service/laadimispunkt-service.s
 })
 export class LaadimispunktListComponent implements OnInit {
 
-  displayedColumns: string[] = ['laadimispunkti_kood', 'laiuskraad', 'nimetus', 'pikkuskraad', 'reg_aeg', 'registreerija_id', 'laadimispunkti_seisundi_liik_kood', 'laadimispunkti_tyyp_id: string;']
+  displayedColumns: string[] = ['laadimispunkti_kood', 'laiuskraad', 'nimetus', 'pikkuskraad' ]
   dataSource: Laadimispunkt[] = [];
 
-  constructor(private router: Router, private laadimispunktService: LaadimispunktServiceService) {}
+  constructor(private router: Router, public laadimispunktService: LaadimispunktServiceService) {}
 
   ngOnInit() {
-    this.laadimispunktService.getAll();
+    this.laadimispunktService.getAll().subscribe(data => this.dataSource);
   }
 
   navigateToLaadimispunktById(id: bigint) {

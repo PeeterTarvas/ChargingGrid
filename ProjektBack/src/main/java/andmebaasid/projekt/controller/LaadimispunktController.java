@@ -1,7 +1,6 @@
 package andmebaasid.projekt.controller;
 
 import andmebaasid.projekt.entities.Laadimispunkt;
-import andmebaasid.projekt.repositories.LaadimispunktRepository;
 import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +21,7 @@ public class LaadimispunktController {
 
     @GetMapping
     public List<Laadimispunkt> getAllLaadimispunkt() {
+        System.out.println("a");
         return laadimispunktiService.getALlLaadimispunkt();
     }
 

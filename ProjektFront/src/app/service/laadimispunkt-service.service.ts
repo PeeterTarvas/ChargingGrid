@@ -10,9 +10,7 @@ export class LaadimispunktServiceService {
 
   constructor(private http: HttpClient) {}
 
-
-
-  getAll(): Observable<Array<Laadimispunkt>> {
-    return this.http.get<Array<Laadimispunkt>>('laadimispunkt');
+  getAll(): Observable<Laadimispunkt[]> {
+    return this.http.get<Laadimispunkt[]>('/laadimispunkt');
   }
 }

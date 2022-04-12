@@ -8,7 +8,7 @@ VALUES ('Eesti');
 INSERT INTO tootaja_seisundi_liik(nimetus)
 VALUES ('tööl');
 
-INSERT INTO isiku_seisundi_liik(nimetus, on_elus)
+INSERT INTO isiku_seisundi_liik(nimetus)
 VALUES ('elus');
 
 INSERT INTO tootaja_roll(kirjeldus, nimetus) VALUES ('juhatab', 'Juhataja');

@@ -54,6 +54,8 @@ DROP TABLE IF EXISTS Laadimispunkti_kategooria_omamine CASCADE
 DROP TABLE IF EXISTS Tootaja_rolli_omamine CASCADE
 ;
 
+DROP DOMAIN IF EXISTS email CASCADE;
+
 /* Create Tables */
 
 CREATE TABLE  Riik 

@@ -1,0 +1,54 @@
+table {
+  width: 100%;
+  min-width: 50em;
+}
+
+.data-table {
+  padding: 2em;
+  padding-top: 1em;
+}
+
+.new-building-btn {
+  float: left;
+  margin-bottom: 1em;
+}
+
+.w-75 {
+  width: 75px;
+}
+
+.w-100 {
+  width: 100px;
+}
+
+tr.mat-row:hover {
+  background: whitesmoke;
+}
+
+.action:hover {
+  cursor: pointer;
+}
+
+.create-button {
+  height: 50px;
+  width: 100px;
+  margin-top: 10px;
+  transition: 0.5s ease;
+
+}
+
+.create-button:hover {
+  background: black;
+
+}
+
+.update-button:hover {
+  transition: 0.5s ease;
+
+}
+
+.update-button:hover {
+  background: black;
+  color: white;
+
+}

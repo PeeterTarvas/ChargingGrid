@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Laadimispunkt} from "../../model/laadimispunkt";
 import {Router} from "@angular/router";
 import {LaadimispunktServiceService} from "../../service/laadimispunkt-service.service";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-laadimispunkt-list',
@@ -10,17 +11,25 @@ import {LaadimispunktServiceService} from "../../service/laadimispunkt-service.s
 })
 export class LaadimispunktListComponent implements OnInit {
 
-  displayedColumns: string[] = ['laadimispunkti_kood', 'laiuskraad', 'nimetus', 'pikkuskraad' ]
-  dataSource: Laadimispunkt[] = [];
+
+  displayedColumns: string[] = ['laadimispunkti_kood', 'nimetus', 'pikkuskraad', 'laiuskraad', 'laadimispunkti_seisundi_liik_kood']
+  dataSource: Laadimispunkt[] | undefined;
 
   constructor(private router: Router, public laadimispunktService: LaadimispunktServiceService) {}
 
+  @ViewChild(MatSort) sort!: MatSort;
+
   ngOnInit() {
-    this.laadimispunktService.getAll().subscribe(data => this.dataSource);
+    this.laadimispunktService.getAll().subscribe(data => this.dataSource = data);
   }
 
-  navigateToLaadimispunktById(id: bigint) {
-    this.router.navigate(['/laadimispunkt/', id]).then(r => r);
+
+
+  navigateToLaadimispunktById() {
+    this.router.navigate(['/laadimispunkt']).then(r => r);
   }
 
+  ngAfterViewInit() {
+   // this.dataSource.sort = this.sort;
+  }
 }

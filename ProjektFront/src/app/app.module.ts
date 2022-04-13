@@ -9,6 +9,8 @@ import {RouterModule} from "@angular/router";
 import {MatTableModule} from "@angular/material/table";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {MatButtonModule} from "@angular/material/button";
     MatTableModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatToolbarModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

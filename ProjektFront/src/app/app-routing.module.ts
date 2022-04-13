@@ -4,8 +4,9 @@ import {LaadimispunktListComponent} from "./components/laadimispunkt-list/laadim
 
 
 const routes: Routes = [
-  { path: 'laadimispunkt', component: LaadimispunktListComponent },
-  { path: '**', redirectTo: '/laadimispunkt', pathMatch: 'full' },
+  { path: 'list', component: LaadimispunktListComponent},
+  { path: 'laadimispunkt', component: LaadimispunktListComponent},
+  { path: '',   redirectTo: '/list', pathMatch: 'full'  }
 ];
 
 @NgModule({

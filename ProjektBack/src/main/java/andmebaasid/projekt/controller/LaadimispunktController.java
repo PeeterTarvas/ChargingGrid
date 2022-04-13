@@ -21,7 +21,6 @@ public class LaadimispunktController {
 
     @GetMapping
     public List<Laadimispunkt> getAllLaadimispunkt() {
-        System.out.println("a");
         return laadimispunktiService.getALlLaadimispunkt();
     }
 

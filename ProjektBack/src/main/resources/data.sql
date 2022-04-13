@@ -24,3 +24,6 @@ VALUES (1, 1, 1);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
 VALUES (1.1, 'Tauno', 1.1, default, 1, 1, 1);
+
+INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
+VALUES (1.1, 'Mauno', 1.1, default, 1, 1, 1);

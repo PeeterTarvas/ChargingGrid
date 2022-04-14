@@ -21,6 +21,15 @@ export class LaadimispunktServiceService {
       .pipe(map((data: any) => data), catchError(this.handleError))
   }
 
+  lopeta(id: bigint| undefined): Observable<any> {
+    if (id !== undefined) {
+      return this.conncetion.get('/laadimispunkt/' + `${id}` + '/lopeta')
+        .pipe(map((data: any) => data), catchError(this.handleError))
+    }
+    console.log("f")
+    return new Observable<any>();
+  }
+
 
   private handleError(res: HttpErrorResponse | any) {
     console.error(res.error || res.body.error);

@@ -11,4 +11,6 @@ export class ConnectionService {
   public get(api_path: String) {
     return this.httpClient.get('http://localhost:8080/api' + api_path);
   }
+
+
 }

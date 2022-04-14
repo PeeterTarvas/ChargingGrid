@@ -74,6 +74,6 @@
     <button mat-raised-button color="basic" class="new-building-btn" (click)="navigateToLaadimispunktList()">
       Back
     </button>
-    <button mat-raised-button color="primary" [disabled]="form.invalid">Lopeta</button>
+    <button mat-raised-button color="primary" (click)="lopetaLaadimispunkt()" [disabled]="form.invalid">Lopeta</button>
   </table>
 </form>

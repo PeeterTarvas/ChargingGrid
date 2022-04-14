@@ -13,7 +13,7 @@ export class LaadimispunktComponent implements OnInit {
 
   laadimispunkt: Laadimispunkt | undefined = undefined;
   form: FormGroup = this.initForm();
-  id: string | null = null;
+  id!: string | null;
 
   constructor(
     private router: Router,
@@ -36,7 +36,7 @@ export class LaadimispunktComponent implements OnInit {
   }
 
   lopetaLaadimispunkt() {
-
+    this.laadimispunkt_service.lopeta(BigInt(this.laadimispunkt?.laadimispunkti_kood!));
   }
 
   hasError(path: string, errorCode: string) {

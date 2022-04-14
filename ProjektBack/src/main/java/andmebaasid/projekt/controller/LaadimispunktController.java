@@ -1,6 +1,9 @@
 package andmebaasid.projekt.controller;
 
+import andmebaasid.projekt.entities.Koondaruanne;
 import andmebaasid.projekt.entities.Laadimispunkt;
+import andmebaasid.projekt.entities.LaadimispunktDTO;
+import andmebaasid.projekt.services.KoondaruanneService;
 import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,32 +19,44 @@ public class LaadimispunktController {
     @Autowired
     private LaadimispunktiService laadimispunktiService;
 
+    @Autowired
+    private KoondaruanneService koondaruanneService;
+
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
-    public List<Laadimispunkt> getAllLaadimispunkt() {
+    public List<LaadimispunktDTO> getAllLaadimispunkt() {
         return laadimispunktiService.getALlLaadimispunkt();
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}")
-    public Laadimispunkt getLaadimispunktWithId(@PathVariable Long id) {
+    public LaadimispunktDTO getLaadimispunktWithId(@PathVariable Long id) {
         return laadimispunktiService.getLaadimispunktWithId(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/active")
-    public List<Laadimispunkt> getAllActiveLaadimispunkt() {
+    public List<LaadimispunktDTO> getAllActiveLaadimispunkt() {
         return laadimispunktiService.getAllActiveLaadimispunkt();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/inactive")
-    public List<Laadimispunkt> getAllInActiveLaadimispunkt() {
+    public List<LaadimispunktDTO> getAllInActiveLaadimispunkt() {
         return laadimispunktiService.getAllInactiveLaadimispunkt();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/koondaruanne")
+    public List<Koondaruanne> getAllKoondaruanne() {
+        return koondaruanneService.getAllKoondaruanne();
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}/lopeta")
     public ResponseEntity<String> setLaadimispunktiSeisundiLiik(@PathVariable Long id) {
         laadimispunktiService.setLaadimispunktiSeisundiLiik(id, "lopetatud");
-        return new ResponseEntity<String>("Hello World", HttpStatus.OK);
+        return new ResponseEntity<>("Hello World", HttpStatus.OK);
     }
 }

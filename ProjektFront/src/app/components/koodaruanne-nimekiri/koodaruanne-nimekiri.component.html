@@ -3,7 +3,7 @@
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="seisundi_kood">
-      <th class="w-60" mat-header-cell *matHeaderCellDef>Kood</th>
+      <th class="w-75" mat-header-cell *matHeaderCellDef>Kood</th>
       <td mat-cell *matCellDef="let element">
         <b>{{element.seisundi_kood}}</b>
       </td>
@@ -15,7 +15,7 @@
     </ng-container>
 
     <ng-container matColumnDef="laadimispunktide_arv">
-      <th class="w-75" mat-header-cell *matHeaderCellDef>X</th>
+      <th class="w-75" mat-header-cell *matHeaderCellDef>Laadimispunktide arv</th>
       <td mat-cell *matCellDef="let element">{{ element.laadimispunktide_arv }}</td>
     </ng-container>
 

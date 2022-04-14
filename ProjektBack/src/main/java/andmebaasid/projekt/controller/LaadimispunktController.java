@@ -1,13 +1,10 @@
 package andmebaasid.projekt.controller;
 
 import andmebaasid.projekt.entities.Koondaruanne;
-import andmebaasid.projekt.entities.Laadimispunkt;
 import andmebaasid.projekt.entities.LaadimispunktDTO;
 import andmebaasid.projekt.services.KoondaruanneService;
 import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,8 +52,8 @@ public class LaadimispunktController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}/lopeta")
-    public ResponseEntity<String> setLaadimispunktiSeisundiLiik(@PathVariable Long id) {
+    public LaadimispunktDTO setLaadimispunktiSeisundiLiik(@PathVariable Long id) {
         laadimispunktiService.setLaadimispunktiSeisundiLiik(id, "lopetatud");
-        return new ResponseEntity<>("Hello World", HttpStatus.OK);
+        return laadimispunktiService.getLaadimispunktWithId(id);
     }
 }

@@ -16,7 +16,7 @@ export class LaadimispunktServiceService {
     return this.conncetion.get('/laadimispunkt')
       .pipe(map((data: any) => data), catchError(this.handleError));
   }
-  
+
   getAllKoodaruanne(): Observable<Koondaruanne[]> {
     return this.conncetion.get('/laadimispunkt/koondaruanne')
       .pipe(map((data: any) => data), catchError(this.handleError));
@@ -28,13 +28,11 @@ export class LaadimispunktServiceService {
       .pipe(map((data: any) => data), catchError(this.handleError))
   }
 
-  lopeta(id: bigint| undefined): Observable<any> {
-    if (id !== undefined) {
-      return this.conncetion.get('/laadimispunkt/' + `${id}` + '/lopeta')
+  lopeta(id: bigint): Observable<any> {
+    let call = '/laadimispunkt/' + `${id}` + '/lopeta';
+      return this.conncetion.get(call)
         .pipe(map((data: any) => data), catchError(this.handleError))
     }
-    return new Observable<any>();
-  }
 
 
   private handleError(res: HttpErrorResponse | any) {

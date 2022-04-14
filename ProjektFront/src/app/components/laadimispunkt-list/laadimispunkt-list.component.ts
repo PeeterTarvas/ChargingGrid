@@ -13,7 +13,7 @@ export class LaadimispunktListComponent implements OnInit {
 
 
   displayedColumns: string[] = ['laadimispunkti_kood', 'nimetus', 'pikkuskraad', 'laiuskraad', 'laadimispunkti_seisundi_liik_kood']
-  dataSource: Laadimispunkt[] | undefined;
+  dataSource!: Laadimispunkt[];
 
   constructor(private router: Router, public laadimispunktService: LaadimispunktServiceService) {}
 
@@ -23,13 +23,8 @@ export class LaadimispunktListComponent implements OnInit {
     this.laadimispunktService.getAll().subscribe(data => this.dataSource = data);
   }
 
-
-
-  navigateToLaadimispunktById() {
-    this.router.navigate(['/laadimispunkt']).then(r => r);
+  navigateToLaadimispunktById(id: bigint) {
+    this.router.navigate(['/laadimispunkt',id]).then(r => r);
   }
 
-  ngAfterViewInit() {
-   // this.dataSource.sort = this.sort;
-  }
 }

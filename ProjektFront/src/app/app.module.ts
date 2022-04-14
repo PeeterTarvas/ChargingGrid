@@ -11,11 +11,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSortModule} from "@angular/material/sort";
+import { LaadimispunktComponent } from './components/laadimispunkt/laadimispunkt.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LaadimispunktListComponent
+    LaadimispunktListComponent,
+    LaadimispunktComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +33,10 @@ import {MatSortModule} from "@angular/material/sort";
     MatButtonModule,
     MatToolbarModule,
     MatSortModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

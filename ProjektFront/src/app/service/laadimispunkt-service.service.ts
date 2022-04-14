@@ -14,6 +14,13 @@ export class LaadimispunktServiceService {
     return this.http.get<Laadimispunkt[]>('/laadimispunkt')
       .pipe(map((data: any) => data), catchError(this.handleError));
   }
+
+  get(id: bigint): Observable<Laadimispunkt> {
+    return this.http.get<Laadimispunkt>('/laadimispunkt/' + `${id}`)
+      .pipe(map((data: any) => data), catchError(this.handleError))
+  }
+
+
   private handleError(res: HttpErrorResponse | any) {
     console.error(res.error || res.body.error);
     return throwError(res.error || 'Server error');

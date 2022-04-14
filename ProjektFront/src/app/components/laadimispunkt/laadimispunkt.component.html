@@ -1,0 +1,70 @@
+<form [formGroup]="form" class="laadimispunkt-form">
+  <table class="w-100p" *ngIf="laadimispunkt">
+    <tr>
+      <td>
+        <h3>
+          Kood:
+          {{
+          laadimispunkt.laadimispunkti_kood
+          }}
+        </h3>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <mat-form-field class="w-100p" appearance="outline">
+          <mat-label>Nimetus</mat-label>
+          <input id="Nimetus" matInput formControlName="nimetus" />
+        </mat-form-field>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <mat-form-field class="w-100p" appearance="outline">
+          <mat-label>Laiuskraad</mat-label>
+          <input matInput formControlName="laiuskraad" />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="w-100p" appearance="outline">
+          <mat-label>Pikkuskraa</mat-label>
+          <input matInput formControlName="pikkuskraad" />
+        </mat-form-field>
+      </td>
+    </tr>
+
+    <td colspan="2">
+      <mat-form-field class="w-100p" appearance="outline">
+        <mat-label>Registreerimise aeg</mat-label>
+        <input matInput formControlName="reg_aeg" />
+      </mat-form-field>
+    </td>
+
+    <tr>
+      <td colspan="2">
+        <mat-form-field class="w-100p" appearance="outline">
+          <mat-label>Registreerija</mat-label>
+          <input matInput formControlName="registreerija_id" />
+        </mat-form-field>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <mat-form-field class="w-100p" appearance="outline">
+          <mat-label>Laadimispunkti seisund</mat-label>
+          <input matInput formControlName="laadimispunkti_seisundi_liik_kood" />
+        </mat-form-field>
+      </td>
+    </tr>
+
+    <mat-divider></mat-divider>
+
+    <button mat-raised-button color="basic" class="new-building-btn" (click)="navigateToLaadimispunktList()">
+      Back
+    </button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid">Lopeta</button>
+  </table>
+</form>

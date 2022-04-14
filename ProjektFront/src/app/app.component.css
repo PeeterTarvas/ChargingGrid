@@ -10,6 +10,7 @@
   font-family: "FuturaPT", Helvetica, Arial, sans-serif;
   font-size: 16px;
   display: flex;
+  align-items: center;
 
 }
 body::-webkit-scrollbar {
@@ -18,5 +19,8 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background: gray;
   border-radius: 50px;
+}
 
+.flexSpaceBetween {
+  justify-content: space-between;
 }

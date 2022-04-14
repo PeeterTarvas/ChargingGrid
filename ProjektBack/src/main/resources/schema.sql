@@ -86,7 +86,7 @@ CREATE TABLE  Tootaja_seisundi_liik
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
 	 laadimispunkti_seisundi_liik_kood  bigserial NOT NULL,
-	 nimetus  varchar(255)	 NOT NULL,
+	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood )
 )
 ;

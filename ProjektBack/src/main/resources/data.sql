@@ -1,5 +1,11 @@
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
-VALUES ('tavaline');
+VALUES ('aktiivne');
+
+INSERT INTO laadimispunkti_seisundi_liik(nimetus)
+VALUES ('mitteaktiivne');
+
+INSERT INTO laadimispunkti_seisundi_liik(nimetus)
+VALUES ('lopetatud');
 
 
 INSERT INTO riik(nimetus)

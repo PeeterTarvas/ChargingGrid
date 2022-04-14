@@ -3,6 +3,8 @@ package andmebaasid.projekt.controller;
 import andmebaasid.projekt.entities.Laadimispunkt;
 import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,9 @@ public class LaadimispunktController {
         return laadimispunktiService.getAllInactiveLaadimispunkt();
     }
 
-    @PutMapping("/{id}/{status}")
-    public void setLaadimispunktiSeisundiLiik(@PathVariable Long id, @PathVariable String status) {
-        laadimispunktiService.setLaadimispunktiSeisundiLiik(id, status);
+    @GetMapping("/{id}/lopeta")
+    public ResponseEntity<String> setLaadimispunktiSeisundiLiik(@PathVariable Long id) {
+        laadimispunktiService.setLaadimispunktiSeisundiLiik(id, "lopetatud");
+        return new ResponseEntity<String>("Hello World", HttpStatus.OK);
     }
 }

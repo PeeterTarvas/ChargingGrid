@@ -7,7 +7,6 @@ VALUES ('mitteaktiivne');
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('lopetatud');
 
-
 INSERT INTO riik(nimetus)
 VALUES ('Eesti');
 

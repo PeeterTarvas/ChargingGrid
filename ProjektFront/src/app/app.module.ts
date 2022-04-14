@@ -16,12 +16,14 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDividerModule} from "@angular/material/divider";
+import { KoodaruanneNimekiriComponent } from './components/koodaruanne-nimekiri/koodaruanne-nimekiri.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LaadimispunktListComponent,
-    LaadimispunktComponent
+    LaadimispunktComponent,
+    KoodaruanneNimekiriComponent
   ],
   imports: [
     BrowserModule,

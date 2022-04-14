@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+  min-width: 50em;
+  height: auto;
+}
+
+.data-table {
+  padding: 2em;
+  padding-top: 1em;
+}
+
+.new-building-btn {
+  float: left;
+  margin-bottom: 1em;
+}
+
+.w-75 {
+  width: 75px;
+}
+
+.w-100 {
+  width: 100px;
+}
+
+tr.mat-row:hover {
+  background: whitesmoke;
+}

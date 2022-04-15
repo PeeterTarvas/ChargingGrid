@@ -22,5 +22,5 @@ body::-webkit-scrollbar-thumb {
 }
 
 .flexSpaceBetween {
-  justify-content: space-between;
+  margin-inline: 10px;
 }

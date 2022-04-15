@@ -9,7 +9,9 @@ export class ConnectionService {
   constructor(private httpClient: HttpClient) { }
 
   public get(api_path: String) {
-    return this.httpClient.get('http://localhost:8080/api' + api_path);
+    let get = 'http://localhost:8080/api' + api_path;
+    console.log(get)
+    return this.httpClient.get(get);
   }
 
 

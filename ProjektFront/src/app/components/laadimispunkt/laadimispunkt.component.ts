@@ -36,7 +36,11 @@ export class LaadimispunktComponent implements OnInit {
   }
 
   lopetaLaadimispunkt() {
-    this.laadimispunkt_service.lopeta(BigInt(this.laadimispunkt?.laadimispunkti_kood!));
+    this.laadimispunkt_service.lopeta(BigInt(this.id!)).subscribe((data) => {
+      this.form = this.initForm(data);
+      this.laadimispunkt = data;
+
+    });
   }
 
   hasError(path: string, errorCode: string) {
@@ -89,10 +93,10 @@ export class LaadimispunktComponent implements OnInit {
           disabled: true,
       }
       ),
-      laadimispunkti_seisundi_liik_kood: new FormControl(
+      laadimispunkti_seisundi_nimetus: new FormControl(
         {
-          value: laadimispunkt?.laadimispunkti_seisundi_liik_kood || '',
-          disabeld: true,
+          value: laadimispunkt?.laadimispunkti_seisundi_nimetus || '',
+          disabled: true,
       }
       ),
       laadimispunkti_tyyp_id: new FormControl(

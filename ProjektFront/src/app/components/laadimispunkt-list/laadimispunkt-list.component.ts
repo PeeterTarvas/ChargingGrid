@@ -12,7 +12,7 @@ import {MatSort} from "@angular/material/sort";
 export class LaadimispunktListComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['laadimispunkti_kood', 'nimetus', 'pikkuskraad', 'laiuskraad', 'laadimispunkti_seisundi_liik_kood']
+  displayedColumns: string[] = ['laadimispunkti_kood', 'nimetus', 'pikkuskraad', 'laiuskraad', 'laadimispunkti_seisundi_nimetus']
   dataSource!: Laadimispunkt[];
 
   constructor(private router: Router, public laadimispunktService: LaadimispunktServiceService) {}

@@ -9,11 +9,6 @@ table {
   padding-top: 1em;
 }
 
-.new-building-btn {
-  float: left;
-  margin-bottom: 1em;
-}
-
 .w-75 {
   width: 75px;
 }
@@ -23,33 +18,11 @@ table {
 }
 
 tr.mat-row:hover {
-  background: whitesmoke;
+  Box-shadow:0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+   padding: 2em;
 }
 
 .action:hover {
   cursor: pointer;
 }
 
-.create-button {
-  height: 50px;
-  width: 100px;
-  margin-top: 10px;
-  transition: 0.5s ease;
-
-}
-
-.create-button:hover {
-  background: black;
-
-}
-
-.update-button:hover {
-  transition: 0.5s ease;
-
-}
-
-.update-button:hover {
-  background: black;
-  color: white;
-
-}

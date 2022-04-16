@@ -17,6 +17,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDividerModule} from "@angular/material/divider";
 import { KoodaruanneNimekiriComponent } from './components/koodaruanne-nimekiri/koodaruanne-nimekiri.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -25,21 +26,22 @@ import { KoodaruanneNimekiriComponent } from './components/koodaruanne-nimekiri/
     LaadimispunktComponent,
     KoodaruanneNimekiriComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    RouterModule,
-    MatTableModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSortModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        RouterModule,
+        MatTableModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSortModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatCardModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,25 @@
-<div class="data-table">
+<div
+     style="
+  margin-bottom: 1em;
+  width: 50%;
+  padding: 0.3em;
+  margin-top: 2em;
+  margin-left: 2em;
+  color: black;
+  font-weight: bold;
+  ">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter(
+     $any($event.target).value
+ )" placeholder="Filter">
+  </mat-form-field>
+</div>
 
+<div *ngIf="dataSource?.filteredData" class="data-table">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="laadimispunkti_kood">
-      <th class="w-20" mat-header-cell mat-sort-header *matHeaderCellDef>Kood</th>
+      <th class="w-20" mat-header-cell mat-sort-header="" sortActionDescription="Sort by kood" *matHeaderCellDef>Kood</th>
       <td mat-cell *matCellDef="let element">
         <b>{{element.laadimispunkti_kood}}</b>
       </td>
@@ -30,11 +46,13 @@
     </ng-container>
 
 
-
-
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="action" mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateToLaadimispunktById(row.laadimispunkti_kood)"></tr>
   </table>
+
+  <mat-card *ngIf="dataSource.filteredData.length <= 0" style="margin-bottom: 5px">
+    <div><span>NO RESULTS</span></div>
+  </mat-card>
+
 
 </div>

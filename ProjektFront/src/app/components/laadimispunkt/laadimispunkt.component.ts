@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Laadimispunkt} from "../../model/laadimispunkt";
 import {LaadimispunktServiceService} from "../../service/laadimispunkt-service.service";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-laadimispunkt',
@@ -35,13 +36,18 @@ export class LaadimispunktComponent implements OnInit {
     }
   }
 
-  lopetaLaadimispunkt() {
-    this.laadimispunkt_service.lopeta(BigInt(this.id!)).subscribe((data) => {
-      this.form = this.initForm(data);
-      this.laadimispunkt = data;
 
-    });
+
+  lopetaLaadimispunkt() {
+    if (this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'aktiivne' ||
+      this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne') {
+      this.laadimispunkt_service.lopeta(BigInt(this.id!)).subscribe((data) => {
+        this.form = this.initForm(data);
+        this.laadimispunkt = data;
+      });
+    }
   }
+
 
   hasError(path: string, errorCode: string) {
     return this.form && this.form.hasError(errorCode, path);
@@ -97,7 +103,11 @@ export class LaadimispunktComponent implements OnInit {
         {
           value: laadimispunkt?.laadimispunkti_seisundi_nimetus || '',
           disabled: true,
-      }
+      },
+          [Validators.required,
+            Validators.pattern('aktiivne'),
+            Validators.pattern('mitteaktiivne')]
+
       ),
       laadimispunkti_tyyp_id: new FormControl(
         {

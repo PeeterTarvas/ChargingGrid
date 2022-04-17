@@ -52,8 +52,15 @@ public class LaadimispunktController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}/lopeta")
-    public LaadimispunktDTO setLaadimispunktiSeisundiLiik(@PathVariable Long id) {
+    public LaadimispunktDTO setLaadimispunktiSeisundiLiikLopetatud(@PathVariable Long id) {
         laadimispunktiService.setLaadimispunktiSeisundiLiik(id, "lopetatud");
+        return laadimispunktiService.getLaadimispunktWithId(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/{id}/aktiveeri")
+    public LaadimispunktDTO setLaadimispunktiSeisundiLiikAktiivne(@PathVariable Long id) {
+        laadimispunktiService.setLaadimispunktiSeisundiLiik(id, "aktiivne");
         return laadimispunktiService.getLaadimispunktWithId(id);
     }
 }

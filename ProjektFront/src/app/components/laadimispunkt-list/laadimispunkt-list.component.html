@@ -1,5 +1,5 @@
 <div
-     style="
+  style="
   margin-bottom: 1em;
   width: 50%;
   padding: 0.3em;
@@ -13,13 +13,14 @@
      $any($event.target).value
  )" placeholder="Filter">
   </mat-form-field>
+
 </div>
 
 <div *ngIf="dataSource?.filteredData" class="data-table">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="laadimispunkti_kood">
-      <th class="w-20" mat-header-cell mat-sort-header="" sortActionDescription="Sort by kood" *matHeaderCellDef>Kood</th>
+      <th class="w-20" mat-header-cell mat-sort-header *matHeaderCellDef>Kood</th>
       <td mat-cell *matCellDef="let element">
         <b>{{element.laadimispunkti_kood}}</b>
       </td>

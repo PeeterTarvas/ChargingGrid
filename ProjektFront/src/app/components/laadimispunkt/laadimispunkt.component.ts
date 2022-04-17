@@ -25,7 +25,6 @@ export class LaadimispunktComponent implements OnInit {
   }
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-
     if (this.id !== null && this.id !== 'new') {
       this.laadimispunkt_service.get(BigInt(this.id)).subscribe((data) => {
         this.form = this.initForm(data);
@@ -35,9 +34,6 @@ export class LaadimispunktComponent implements OnInit {
 
     }
   }
-
-
-
   lopetaLaadimispunkt() {
     if (this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'aktiivne' ||
       this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne') {
@@ -113,9 +109,18 @@ export class LaadimispunktComponent implements OnInit {
         {
           value: laadimispunkt?.laadimispunkti_tyyp_id || '',
           disabled: true,
-      }
+      }),
+      laadimispunkti_registreeriniu_tootaja_nimi: new FormControl(
+      {
+        value: laadimispunkt?.eesnimi + ' ' + laadimispunkt?.perenimi || '',
+        disabled: true,
+      }),
+      laadimispunkti_registreeriniu_tootaja_email: new FormControl(
+        {
+          value: laadimispunkt?.e_post || '',
+          disabled: true,
+        }),
 
-      )
     });
   }
 

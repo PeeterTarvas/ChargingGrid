@@ -34,6 +34,12 @@ export class LaadimispunktServiceService {
         .pipe(map((data: any) => data), catchError(this.handleError))
     }
 
+  aktiveeri(id: bigint): Observable<any> {
+    let call = '/laadimispunkt/' + `${id}` + '/aktiveeri';
+    return this.conncetion.get(call)
+      .pipe(map((data: any) => data), catchError(this.handleError))
+  }
+
 
   private handleError(res: HttpErrorResponse | any) {
     console.error(res.error || res.body.error);

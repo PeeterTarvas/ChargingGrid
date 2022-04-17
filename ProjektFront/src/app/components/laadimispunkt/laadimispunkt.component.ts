@@ -43,6 +43,16 @@ export class LaadimispunktComponent implements OnInit {
       });
     }
   }
+  aktiveeriLaadimispunkt() {
+    if (this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'lopetatud' ||
+      this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne' ||
+      this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'lõpetatud') {
+      this.laadimispunkt_service.aktiveeri(BigInt(this.id!)).subscribe((data) => {
+        this.form = this.initForm(data);
+        this.laadimispunkt = data;
+      });
+    }
+  }
 
 
   hasError(path: string, errorCode: string) {

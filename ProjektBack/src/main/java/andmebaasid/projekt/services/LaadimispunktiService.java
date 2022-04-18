@@ -2,7 +2,7 @@ package andmebaasid.projekt.services;
 
 import andmebaasid.projekt.entities.Isik;
 import andmebaasid.projekt.entities.Laadimispunkt;
-import andmebaasid.projekt.entities.LaadimispunktDTO;
+import andmebaasid.projekt.dto.LaadimispunktDTO;
 import andmebaasid.projekt.repositories.IsikRepository;
 import andmebaasid.projekt.repositories.LaadimispunktRepository;
 import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;

@@ -1,7 +1,7 @@
 package andmebaasid.projekt.controller;
 
 import andmebaasid.projekt.entities.Koondaruanne;
-import andmebaasid.projekt.entities.LaadimispunktDTO;
+import andmebaasid.projekt.dto.LaadimispunktDTO;
 import andmebaasid.projekt.services.KoondaruanneService;
 import andmebaasid.projekt.services.LaadimispunktiService;
 import org.springframework.beans.factory.annotation.Autowired;

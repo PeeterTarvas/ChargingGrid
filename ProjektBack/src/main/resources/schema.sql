@@ -232,10 +232,7 @@ CREATE TABLE  Tootaja_rolli_omamine
 
 /* Create Primary Keys, Indexes, Uniques, Checks */
 
-CREATE INDEX  IXFK_Laadimispunkti_tyyp_kood  ON  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood  ASC)
-;
-
-CREATE INDEX  IXFK_Laadimispunkti_tyyp_Tootaja_roll  ON  Laadimispunkti_tyyp  ( kWh  ASC)
+CREATE INDEX  IXFK_Laadimispunkti_tyyp_kWh ON  Laadimispunkti_tyyp  ( kWh  ASC)
 ;
 
 CREATE INDEX  IXFK_Laadimispunkti_kategooria_Laadimispunkti_kategooria_tyyp  ON  Laadimispunkti_kategooria  ( laadimispunkti_kategooria_tyyp_kood  ASC)

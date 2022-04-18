@@ -6,6 +6,7 @@ import andmebaasid.projekt.dto.LaadimispunktDTO;
 import andmebaasid.projekt.repositories.IsikRepository;
 import andmebaasid.projekt.repositories.LaadimispunktRepository;
 import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;
+import andmebaasid.projekt.repositories.LaadimispunktiTyypRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class LaadimispunktiService {
     private LaadimispunktiSeisundiLiikRepository laadimispunktiSeisundiLiikRepository;
     @Autowired
     private IsikRepository isikRepository;
+    @Autowired
+    private LaadimispunktiTyypRepository laadimispunktiTyypRepository;
 
     public LaadimispunktDTO mapLaadimispunktToLaadimispunktDTO(Laadimispunkt laadimispunkt) {
         LaadimispunktDTO laadimispunktDTO = new LaadimispunktDTO();
@@ -42,6 +45,7 @@ public class LaadimispunktiService {
         laadimispunktDTO.setEesnimi(isik.getEesnimi());
         laadimispunktDTO.setPerenimi(isik.getPerenimi());
         laadimispunktDTO.setE_post(isik.getE_meil());
+        laadimispunktDTO.setLaadimispunkti_tyyp_nimi(laadimispunktiTyypRepository.findByLaadimispunkti_tyyp_kood(laadimispunkt.getLaadimispunkti_tyyp_id()).getKwh());
         return laadimispunktDTO;
     }
 

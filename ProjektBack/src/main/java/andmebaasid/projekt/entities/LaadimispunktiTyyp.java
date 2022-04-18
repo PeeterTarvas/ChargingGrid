@@ -14,15 +14,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class LaadimispunktiTyyp {
 
+    @Column
+    private Long kwh;
+
     @Id
-    private Long tootaja_seisundi_liik_kood;
-
-    @Column
     private Long laadimispunkti_tyyp_kood;
-
-    @Column
-    private Long tootaja_roll_kood;
-
-    @Column
-    private Long riik_kood;
 }

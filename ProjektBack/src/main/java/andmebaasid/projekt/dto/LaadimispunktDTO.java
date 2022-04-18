@@ -1,6 +1,5 @@
 package andmebaasid.projekt.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,5 +22,5 @@ public class LaadimispunktDTO {
     private String eesnimi;
     private String perenimi;
     private String e_post;
-    private Integer laadimispunkti_tyyp_nimi;
+    private Long laadimispunkti_tyyp_nimi;
 }

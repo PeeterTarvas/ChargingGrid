@@ -1,8 +1,12 @@
+
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('aktiivne');
 
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('mitteaktiivne');
+
+INSERT INTO laadimispunkti_seisundi_liik(nimetus)
+VALUES ('ootel');
 
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('lopetatud');
@@ -30,8 +34,8 @@ VALUES ('11111111', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Tallinn', 'peeterta
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, isikukoodi_riik, isiku_seisundi_liik_kood)
 VALUES ('11111112', '29-09-1999'::date, 'Eeter', 'Tarvas', 'Kehra', 'eetertarvas@gmail.com', 1, 1);
 
-INSERT INTO Tootaja(klassifikaatori_kood, isik_id, mentor)
-VALUES (1, 1, 1);
+INSERT INTO Tootaja(klassifikaatori_kood, isik_id)
+VALUES (1, 1);
 
 INSERT INTO Tootaja(klassifikaatori_kood, isik_id, mentor)
 VALUES (1, 2, 1);

@@ -170,11 +170,12 @@ CREATE TABLE  Tootaja
 (
 	 klassifikaatori_kood  bigint NOT NULL,
 	 isik_id  bigint NOT NULL,
-	 Mentor  bigint NULL,
+	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( klassifikaatori_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE Cascade,
 	CONSTRAINT  FK_Tootaja_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE No Action ON UPDATE No Action,
-	CONSTRAINT  FK_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE No Action ON UPDATE No Action
+	CONSTRAINT  FK_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE No Action ON UPDATE No Action,
+    CONSTRAINT CHK_check_if_mentor_and_id_dont_match CHECK( isik_id != mentor )
 )
 ;
 

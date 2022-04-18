@@ -117,14 +117,9 @@ CREATE TABLE  Isiku_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_tyyp 
 (
-	 tootaja_seisundi_liik_kood  bigint NULL,
 	 laadimispunkti_tyyp_kood  bigserial NOT NULL,
-	 tootaja_roll_kood  bigint NULL,
-	 riik_kood  bigint NULL,
-	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood ),
-    CONSTRAINT FK_riik_kood FOREIGN KEY (riik_kood) REFERENCES riik (riik_kood),
-    CONSTRAINT FK_tootaja_seisundi_liik_kood FOREIGN KEY (tootaja_roll_kood) REFERENCES Tootaja_seisundi_liik (tootaja_seisundi_liik_kood),
-    CONSTRAINT FK_tootaja_roll_kood FOREIGN KEY (tootaja_roll_kood) REFERENCES Tootaja_roll (tootaja_roll_kood)
+	 kWh  bigint NULL,
+	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood )
 
 )
 ;
@@ -139,9 +134,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 )
 ;
 
-
 CREATE DOMAIN email AS TEXT CHECK (VALUE ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
-
 
 CREATE TABLE  Isik 
 (
@@ -185,10 +178,10 @@ CREATE TABLE  Tootaja
 )
 ;
 
-CREATE TABLE  Laadimispunkt 
+CREATE TABLE  Laadimispunkt
 (
-	 laiuskraad  decimal(10,4) NOT NULL,
-	 Laadimispunkti_kood  BIGSERIAL NOT NULL,
+    Laadimispunkti_kood  BIGSERIAL NOT NULL,
+      laiuskraad  decimal(10,4) NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -238,13 +231,10 @@ CREATE TABLE  Tootaja_rolli_omamine
 
 /* Create Primary Keys, Indexes, Uniques, Checks */
 
-CREATE INDEX  IXFK_Laadimispunkti_tyyp_Riik  ON  Laadimispunkti_tyyp  ( riik_kood  ASC)
+CREATE INDEX  IXFK_Laadimispunkti_tyyp_kood  ON  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood  ASC)
 ;
 
-CREATE INDEX  IXFK_Laadimispunkti_tyyp_Tootaja_roll  ON  Laadimispunkti_tyyp  ( tootaja_roll_kood  ASC)
-;
-
-CREATE INDEX  IXFK_Laadimispunkti_tyyp_Tootaja_seisundi_liik  ON  Laadimispunkti_tyyp  ( tootaja_seisundi_liik_kood  ASC)
+CREATE INDEX  IXFK_Laadimispunkti_tyyp_Tootaja_roll  ON  Laadimispunkti_tyyp  ( kWh  ASC)
 ;
 
 CREATE INDEX  IXFK_Laadimispunkti_kategooria_Laadimispunkti_kategooria_tyyp  ON  Laadimispunkti_kategooria  ( laadimispunkti_kategooria_tyyp_kood  ASC)

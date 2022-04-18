@@ -115,9 +115,9 @@ export class LaadimispunktComponent implements OnInit {
             Validators.pattern('mitteaktiivne')]
 
       ),
-      laadimispunkti_tyyp_id: new FormControl(
+      laadimispunkti_tyyp_nimi: new FormControl(
         {
-          value: laadimispunkt?.laadimispunkti_tyyp_id || '',
+          value: laadimispunkt?.laadimispunkti_tyyp_nimi || '',
           disabled: true,
       }),
       laadimispunkti_registreeriniu_tootaja_nimi: new FormControl(

@@ -31,18 +31,22 @@ export class LaadimispunktComponent implements OnInit {
         this.laadimispunkt = data;
 
       });
-
     }
   }
   lopetaLaadimispunkt() {
-    if (this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'aktiivne' ||
-      this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne') {
+    if (this.isEndable()) {
       this.laadimispunkt_service.lopeta(BigInt(this.id!)).subscribe((data) => {
         this.form = this.initForm(data);
         this.laadimispunkt = data;
       });
     }
   }
+
+  isEndable(): boolean {
+    return this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'aktiivne' ||
+      this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne'
+  }
+
   aktiveeriLaadimispunkt() {
     if (this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'lopetatud' ||
       this.laadimispunkt?.laadimispunkti_seisundi_nimetus === 'mitteaktiivne' ||
@@ -53,6 +57,8 @@ export class LaadimispunktComponent implements OnInit {
       });
     }
   }
+
+
 
 
   hasError(path: string, errorCode: string) {

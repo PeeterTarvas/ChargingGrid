@@ -6,6 +6,8 @@
 
 /* Drop Tables */
 
+SET timezone TO 'UTC';
+
 DROP TABLE IF EXISTS Riik  CASCADE
 ;
 
@@ -127,11 +129,11 @@ CREATE TABLE  Laadimispunkti_tyyp
 
 CREATE TABLE  Laadimispunkti_kategooria 
 (
-	 laadimispunkti_kategooria_kood  smallserial NOT NULL,
-	 nimetus  varchar(255) NOT NULL,
+	 laadimispunkti_kategooria_kood  smallserial UNIQUE NOT NULL,
+	 nimetus  varchar(255) UNIQUE NOT NULL,
 	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood, nimetus ),
-	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action  ON UPDATE CASCADE,
+	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE
 )
 ;
 
@@ -140,7 +142,7 @@ CREATE TABLE  Isik
      isik_id  BIGSERIAL NOT NULL,
 	 isikukood  varchar(255) NOT NULL,
 	 synni_kp  date NOT NULL,
-	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP(0) WITHOUT TIME ZONE,
+	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 	 eesnimi  varchar(1024)	 NULL,
 	 perenimi  varchar(1024)	 NULL,
 	 elukoht  varchar(1024)	 NULL,
@@ -170,13 +172,13 @@ CREATE TABLE  Kasutajakonto
 
 CREATE TABLE  Tootaja 
 (
-	 tootaja_klassifikaatori_kood  bigint UNIQUE NOT NULL,
+	 tootaja_klassifikaatori_kood  bigint NOT NULL,
 	 isik_id  bigint NOT NULL,
 	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_klassifikaatori_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE Cascade,
 	CONSTRAINT  FK_Tootaja_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE No Action ON UPDATE No Action,
-	CONSTRAINT  FK_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE No Action ON UPDATE No Action,
+	CONSTRAINT  FK_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT CHK_check_if_mentor_and_id_dont_match CHECK( isik_id != mentor )
 )
 ;
@@ -202,20 +204,21 @@ CREATE TABLE  Laadimispunkt
 CREATE TABLE  Klient 
 (
 	 on_nous_tylitamisega  boolean DEFAULT FALSE,
-	 klassifikaatori_kood  bigint NOT NULL,
+	 klassifikaatori_kood_kliendi_seisund  bigint NOT NULL,
 	 isik_id  bigint NOT NULL,
 	CONSTRAINT  PK_Klient  PRIMARY KEY ( isik_id ),
-	CONSTRAINT  FK_Klient_Kliendi_seisundi_liik  FOREIGN KEY ( klassifikaatori_kood ) REFERENCES  Kliendi_seisundi_liik  ( kliendi_seisundi_liik_kood ) ON DELETE No Action ON UPDATE Cascade,
-	CONSTRAINT  FK_Klient_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE No Action  ON UPDATE CASCADE,
+	CONSTRAINT  FK_Klient_Kliendi_seisundi_liik  FOREIGN KEY ( klassifikaatori_kood_kliendi_seisund ) REFERENCES  Kliendi_seisundi_liik  ( kliendi_seisundi_liik_kood ) ON DELETE No Action ON UPDATE Cascade,
+	CONSTRAINT  FK_Klient_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE No Action  ON UPDATE CASCADE
 )
 ;
 
 CREATE TABLE  Laadimispunkti_kategooria_omamine 
 (
 	 Laadimispunkti_kood  smallint NOT NULL,
-	 klassifikaatori_kood  smallint NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_kategooria_omamine  PRIMARY KEY ( Laadimispunkti_kood , klassifikaatori_kood ) ON UPDATE CASCADE,
-	CONSTRAINT FK_laadimispunkti_kood FOREIGN KEY (Laadimispunkti_kood) REFERENCES laadimispunkt(laadimispunkti_kood)
+     laadimispunkti_kategooria_kood  smallint NOT NULL,
+	CONSTRAINT  PK_Laadimispunkti_kategooria_omamine  PRIMARY KEY ( Laadimispunkti_kood , laadimispunkti_kategooria_kood ),
+	CONSTRAINT FK_laadimispunkti_kood FOREIGN KEY (Laadimispunkti_kood) REFERENCES laadimispunkt(laadimispunkti_kood),
+	CONSTRAINT FK_laadimispunkti_kategooria FOREIGN KEY (laadimispunkti_kategooria_kood) REFERENCES laadimispunkti_kategooria(laadimispunkti_kategooria_kood)
 )
 ;
 

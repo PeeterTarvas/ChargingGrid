@@ -1,3 +1,5 @@
+SET DATESTYLE TO  DMY;
+
 
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('aktiivne');
@@ -53,10 +55,10 @@ INSERT INTO laadimispunkt(laadimispunkti_kood, laiuskraad, nimetus, pikkuskraad,
 VALUES (3 ,12.2, 'Kolmas', 20.1, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laadimispunkti_kood, laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (4, 12.2, 'Neljas', 15.1, default, 2, 1, 2);
+VALUES (4, 12.2, 'Neljas', 15.1, default, 2, 3, 2);
 
 INSERT INTO laadimispunkt(laadimispunkti_kood, laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
 VALUES (5, 179.56, 'Viies', 28.1, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laadimispunkti_kood, laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (6, 66.6, 'Kuues', 66.6, default, 2, 1, 2);
+VALUES (6, 66.6, 'Kuues', 66.6, default, 2, 4, 2);

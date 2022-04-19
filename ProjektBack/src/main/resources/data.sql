@@ -61,3 +61,48 @@ VALUES (5, 179.56, 'Viies', 28.1, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laadimispunkti_kood, laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
 VALUES (6, 66.6, 'Kuues', 66.6, default, 2, 4, 2);
+
+INSERT INTO laadimispunkti_kategooria_tyyp(nimetus)
+VALUES ('Laadija Kiirus');
+
+INSERT INTO laadimispunkti_kategooria(nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES ('Kiirlaadija', 1);
+
+INSERT INTO laadimispunkti_kategooria(nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES ('Tavalaadija', 1);
+
+INSERT INTO laadimispunkti_kategooria_tyyp(nimetus)
+VALUES ('Laadimisparkla suurus');
+
+INSERT INTO laadimispunkti_kategooria(nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES ('Väike laadimisparkla', 2);
+
+INSERT INTO laadimispunkti_kategooria(nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES ('Keskmine laadimisparkla', 2);
+
+INSERT INTO laadimispunkti_kategooria(nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES ('Suur laadimisparkla', 2);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (1, 1);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (1, 3);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (2, 2);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (2, 4);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (3, 1);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (4, 5);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (5, 2);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (5, 5);

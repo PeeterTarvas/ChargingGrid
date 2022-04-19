@@ -6,8 +6,6 @@
 
 /* Drop Tables */
 
-SET timezone TO 'UTC';
-
 DROP TABLE IF EXISTS Riik  CASCADE
 ;
 
@@ -139,7 +137,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 
 CREATE TABLE  Isik 
 (
-     isik_id  BIGSERIAL NOT NULL,
+     isik_id  BIGSERIAL UNIQUE NOT NULL,
 	 isikukood  varchar(255) NOT NULL,
 	 synni_kp  date NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -185,11 +183,11 @@ CREATE TABLE  Tootaja
 
 CREATE TABLE  Laadimispunkt
 (
-     Laadimispunkti_kood  smallint UNIQUE NOT NULL,
+     Laadimispunkti_kood  bigint NOT NULL,
      laiuskraad  decimal(10,4) NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
-	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	 reg_aeg  timestamp(6)  WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 	 registreerija_id  bigint NOT NULL,
 	 laadimispunkti_seisundi_liik_kood  bigint NOT NULL,
 	 laadimispunkti_tyyp_id  bigint NOT NULL,
@@ -256,4 +254,7 @@ CREATE INDEX  IXFK_Laadimispunkti_kategooria_omamine_Laadimispunkt  ON  Laadimis
 ;
 
 CREATE UNIQUE INDEX email_unq_idx ON isik (lower(e_meil))
+;
+
+CREATE UNIQUE INDEX laadimispunkt_uniq_indx ON laadimispunkt(Laadimispunkti_kood)
 ;

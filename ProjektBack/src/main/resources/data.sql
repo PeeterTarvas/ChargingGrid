@@ -1,6 +1,5 @@
 SET DATESTYLE TO  DMY;
 
-
 INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('aktiivne');
 

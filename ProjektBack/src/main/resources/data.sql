@@ -41,19 +41,19 @@ INSERT INTO Tootaja(klassifikaatori_kood, isik_id, mentor)
 VALUES (1, 2, 1);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (1.8, 'Tauno', 1.5, default, 1, 1, 1);
+VALUES (1.8, 'Esimene', 1.5, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (1.2, 'Mauno', 1.9, default, 2, 2, 2);
+VALUES (1.2, 'Teine', 1.9, default, 2, 2, 2);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (12.2, 'Kauno', 20.1, default, 1, 1, 1);
+VALUES (12.2, 'Kolmas', 20.1, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (12.2, 'Rauno', 15.1, default, 2, 1, 2);
+VALUES (12.2, 'Neljas', 15.1, default, 2, 1, 2);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (179.56, 'Kauno', 28.1, default, 1, 1, 1);
+VALUES (179.56, 'Viies', 28.1, default, 1, 1, 1);
 
 INSERT INTO laadimispunkt(laiuskraad, nimetus, pikkuskraad, reg_aeg, registreerija_id, laadimispunkti_seisundi_liik_kood, laadimispunkti_tyyp_id)
-VALUES (66.6, '666', 66.6, default, 2, 1, 2);
+VALUES (66.6, 'Kuues', 66.6, default, 2, 1, 2);

@@ -119,7 +119,8 @@ CREATE TABLE  Laadimispunkti_tyyp
 (
 	 laadimispunkti_tyyp_kood  bigserial NOT NULL,
 	 kWh  bigint NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood )
+	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood ),
+    CONSTRAINT CHK_kWh_is_correct CHECK (kWh BETWEEN 0 AND 200)
 
 )
 ;
@@ -182,7 +183,7 @@ CREATE TABLE  Tootaja
 CREATE TABLE  Laadimispunkt
 (
     Laadimispunkti_kood  BIGSERIAL NOT NULL,
-      laiuskraad  decimal(10,4) NOT NULL,
+    laiuskraad  decimal(10,4) NOT NULL,
 	 nimetus  varchar(255)	 NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,

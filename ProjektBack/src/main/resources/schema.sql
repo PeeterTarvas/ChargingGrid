@@ -118,7 +118,7 @@ CREATE TABLE  Isiku_seisundi_liik
 CREATE TABLE  Laadimispunkti_tyyp 
 (
 	 laadimispunkti_tyyp_kood  bigserial NOT NULL,
-	 kWh  bigint NULL,
+	 kWh  bigint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood )
 
 )

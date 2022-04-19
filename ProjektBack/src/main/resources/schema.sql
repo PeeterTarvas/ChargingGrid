@@ -69,7 +69,7 @@ CREATE TABLE  Riik
 CREATE TABLE  Tootaja_roll 
 (
 	 kirjeldus  TEXT	NOT NULL,
-	 tootaja_roll_kood  bigserial NOT NULL,
+	 tootaja_roll_kood  smallint NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Tootaja_roll  PRIMARY KEY ( tootaja_roll_kood )
 )
@@ -77,7 +77,7 @@ CREATE TABLE  Tootaja_roll
 
 CREATE TABLE  Tootaja_seisundi_liik 
 (
-	 tootaja_seisundi_liik_kood  bigserial NOT NULL,
+	 tootaja_seisundi_liik_kood  smallint NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Tootaja_seisundi_liik  PRIMARY KEY ( tootaja_seisundi_liik_kood )
 )
@@ -85,7 +85,7 @@ CREATE TABLE  Tootaja_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
-	 laadimispunkti_seisundi_liik_kood  bigserial NOT NULL,
+	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood )
 )
@@ -93,7 +93,7 @@ CREATE TABLE  Laadimispunkti_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_kategooria_tyyp 
 (
-	 laadimispunkti_kategooria_tyyp_kood  bigserial NOT NULL,
+	 laadimispunkti_kategooria_tyyp_kood  smallint NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood )
 )
@@ -109,7 +109,7 @@ CREATE TABLE  Kliendi_seisundi_liik
 
 CREATE TABLE  Isiku_seisundi_liik 
 (
-	 isiku_seisundi_liik_kood  bigserial NOT NULL,
+	 isiku_seisundi_liik_kood  smallint NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
 	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood )
 )
@@ -117,7 +117,7 @@ CREATE TABLE  Isiku_seisundi_liik
 
 CREATE TABLE  Laadimispunkti_tyyp 
 (
-	 laadimispunkti_tyyp_kood  bigserial NOT NULL,
+	 laadimispunkti_tyyp_kood  smallint NOT NULL,
 	 kWh  bigint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_tyyp  PRIMARY KEY ( laadimispunkti_tyyp_kood ),
     CONSTRAINT CHK_kWh_is_correct CHECK (kWh BETWEEN 0 AND 200)
@@ -127,27 +127,27 @@ CREATE TABLE  Laadimispunkti_tyyp
 
 CREATE TABLE  Laadimispunkti_kategooria 
 (
-	 laadimispunkti_kategooria_kood  bigserial NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
+	 laadimispunkti_kategooria_kood  smallint NOT NULL,
+	 nimetus  varchar(255) NOT NULL,
 	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood ),
+	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood, nimetus ),
 	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE No Action
 )
 ;
 
-CREATE DOMAIN email AS TEXT CHECK (VALUE ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
+CREATE DOMAIN email AS varchar(254) CHECK (VALUE ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$');
 
 CREATE TABLE  Isik 
 (
      isik_id  BIGSERIAL NOT NULL,
-	 isikukood  varchar(11)	 NOT NULL,
+	 isikukood  varchar(255) NOT NULL,
 	 synni_kp  date NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	 eesnimi  varchar(255)	 NULL,
-	 perenimi  varchar(255)	 NULL,
-	 elukoht  varchar(255)	 NULL,
-	 e_meil  email NOT NULL,
-	 isikukoodi_riik  bigint NOT NULL,
+	 eesnimi  varchar(1024)	 NULL,
+	 perenimi  varchar(1024)	 NULL,
+	 elukoht  varchar(1024)	 NULL,
+	 e_meil  email UNIQUE NOT NULL,
+	 isikukoodi_riik  varchar(3) NOT NULL,
 	 isiku_seisundi_liik_kood  bigint NOT NULL,
 	CONSTRAINT  PK_Isik  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  CHK_kehtiv_vanus  CHECK (CURRENT_DATE-synni_kp>=(16*365)),
@@ -159,8 +159,8 @@ CREATE TABLE  Isik
 CREATE TABLE  Kasutajakonto 
 (
 	 parool  varchar(50)	 NOT NULL,
-	 on_aktiivne  boolean DEFAULT TRUE,
-	 isik_id  bigint NOT NULL,
+	 on_aktiivne  boolean DEFAULT TRUE NOT NULL,
+	 isik_id  bigint UNIQUE NOT NULL,
 	 kasutajakonto_id  BIGSERIAL NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( kasutajakonto_id ),
 	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE
@@ -211,8 +211,8 @@ CREATE TABLE  Klient
 
 CREATE TABLE  Laadimispunkti_kategooria_omamine 
 (
-	 Laadimispunkti_kood  bigint NOT NULL,
-	 klassifikaatori_kood  bigint NOT NULL,
+	 Laadimispunkti_kood  smallint NOT NULL,
+	 klassifikaatori_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_omamine  PRIMARY KEY ( Laadimispunkti_kood , klassifikaatori_kood ),
 	CONSTRAINT FK_laadimispunkti_kood FOREIGN KEY (Laadimispunkti_kood) REFERENCES laadimispunkt(laadimispunkti_kood)
 )

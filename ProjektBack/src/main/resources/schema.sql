@@ -68,7 +68,7 @@ CREATE TABLE  Riik
 	 riik_kood  varchar(3) NOT NULL,
 	 nimetus  varchar(60) UNIQUE  NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
-	CONSTRAINT CHK_riik_kood_on_oige CHECK ( riik_kood <> '' OR )
+	CONSTRAINT CHK_riik_kood_on_oige CHECK ( riik_kood <> '' AND riik_kood ~* '[A-Z]' AND LENGTH(riik_kood) = 3)
 )
 ;
 
@@ -159,7 +159,7 @@ CREATE TABLE  Isik
     CONSTRAINT AK_id_riik UNIQUE (isikukood, isikukoodi_riik),
     CONSTRAINT CHK_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ( eesnimi <> '' OR perenimi <> ''),
-    CONSTRAINT CHK_elukoht CHECK (elukoht <> '' OR elukoht NOT LIKE '^\d+\.?\d+$')
+    CONSTRAINT CHK_elukoht CHECK (elukoht <> '' AND elukoht NOT LIKE '^\d+\.?\d+$')
 )
 ;
 

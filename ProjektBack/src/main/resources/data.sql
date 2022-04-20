@@ -13,7 +13,7 @@ INSERT INTO laadimispunkti_seisundi_liik(nimetus)
 VALUES ('lopetatud');
 
 INSERT INTO riik(riik_kood, nimetus)
-VALUES ('EE','Eesti');
+VALUES ('EST','Eesti');
 
 INSERT INTO tootaja_seisundi_liik(nimetus)
 VALUES ('tööl');
@@ -30,13 +30,14 @@ INSERT INTO laadimispunkti_tyyp(kWh)
 VALUES (40);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, isikukoodi_riik, isiku_seisundi_liik_kood)
-VALUES ('11111111', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Tallinn', 'peetertarvas@gmail.com', 'EE', 1);
+VALUES ('11111111', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Tallinn', 'peetertarvas@gmail.com', 'EST', 1);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, isikukoodi_riik, isiku_seisundi_liik_kood)
-VALUES ('11111112', '29-09-1999'::date, 'Eeter', 'Tarvas', 'Kehra', 'veetertarvas@gmail.com', 'EE', 1);
+VALUES ('11111112', '29-09-1999'::date, 'Eeter', 'Tarvas', 'Kehra', 'veetertarvas@gmail.com', 'EST', 1);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, isikukoodi_riik, isiku_seisundi_liik_kood)
-VALUES ('11111113', '29-09-1999'::date, 'Eeter', '', 'Kehra', 'eetertarvas@gmail.com', 'EE', 1);
+VALUES ('11111113', '29-09-1999'::date, 'Eeter', '', 'Kehra', 'eetertarvas@gmail.com', 'EST', 1);
+
 
 INSERT INTO Tootaja(tootaja_klassifikaatori_kood, isik_id)
 VALUES (1, 1);
@@ -106,3 +107,6 @@ VALUES (5, 2);
 
 INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
 VALUES (5, 5);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (6, 1);

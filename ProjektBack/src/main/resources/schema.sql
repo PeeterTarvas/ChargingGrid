@@ -4,6 +4,9 @@
 /*  DBMS       : PostgreSQL 						*/
 /* ---------------------------------------------------- */
 
+
+
+
 /* Drop Tables */
 
 DROP TABLE IF EXISTS Riik  CASCADE
@@ -58,11 +61,14 @@ DROP DOMAIN IF EXISTS email CASCADE;
 
 /* Create Tables */
 
+
+
 CREATE TABLE  Riik 
 (
 	 riik_kood  varchar(3) NOT NULL,
-	 nimetus  varchar(50) UNIQUE  NOT NULL,
-	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood )
+	 nimetus  varchar(60) UNIQUE  NOT NULL,
+	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
+	CONSTRAINT CHK_riik_kood_on_oige CHECK ( riik_kood <> '' OR )
 )
 ;
 
@@ -141,19 +147,19 @@ CREATE TABLE  Isik
 	 isikukood  varchar(255) NOT NULL,
 	 synni_kp  date NOT NULL,
 	 reg_aeg  timestamp(6) with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-	 eesnimi  varchar(1024)	 NULL,
-	 perenimi  varchar(1024)	 NULL,
-	 elukoht  varchar(1024)	 NULL,
-	 e_meil  varchar(254) UNIQUE NOT NULL,
+	 eesnimi  varchar(1024),
+	 perenimi  varchar(1024),
+	 elukoht  varchar(1024) NOT NULL,
+	 e_meil  varchar(254) NOT NULL,
 	 isikukoodi_riik  varchar(3) NOT NULL,
 	 isiku_seisundi_liik_kood  bigint NOT NULL,
 	CONSTRAINT  PK_Isik  PRIMARY KEY ( isik_id ),
-	CONSTRAINT  CHK_kehtiv_vanus  CHECK (CURRENT_DATE-synni_kp>=(16*365)),
 	CONSTRAINT  FK_Isik_Isiku_seisundi_liik  FOREIGN KEY ( isiku_seisundi_liik_kood ) REFERENCES  Isiku_seisundi_liik  ( isiku_seisundi_liik_kood ) ON DELETE No Action  ON UPDATE CASCADE,
 	CONSTRAINT  FK_isikukoodi_riik  FOREIGN KEY ( isikukoodi_riik ) REFERENCES  Riik  ( riik_kood ) ON DELETE No Action ON UPDATE Cascade,
     CONSTRAINT AK_id_riik UNIQUE (isikukood, isikukoodi_riik),
     CONSTRAINT CHK_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
-    CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ( eesnimi <> '' OR perenimi <> '')
+    CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ( eesnimi <> '' OR perenimi <> ''),
+    CONSTRAINT CHK_elukoht CHECK (elukoht <> '' OR elukoht NOT LIKE '^\d+\.?\d+$')
 )
 ;
 
@@ -164,7 +170,8 @@ CREATE TABLE  Kasutajakonto
 	 isik_id  bigint UNIQUE NOT NULL,
 	 kasutajakonto_id  BIGSERIAL NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( kasutajakonto_id ),
-	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT CHK_parool CHECK ( parool <> '')
 )
 ;
 

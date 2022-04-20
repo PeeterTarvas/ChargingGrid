@@ -18,5 +18,6 @@ public class LaadimispunktiTyyp {
     private Long kwh;
 
     @Id
+    @Column
     private Long laadimispunkti_tyyp_kood;
 }

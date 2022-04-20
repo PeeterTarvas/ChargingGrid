@@ -30,7 +30,6 @@ public class KoondaruanneService {
             koondaruanne.setLaadimispunktide_arv(laadimispunktid.getOrDefault(seisund.getLaadimispunkti_seisundi_liik_kood(), 0L));
             koondaruanded.add(koondaruanne);
         }
-        System.out.println(koondaruanded);
         return koondaruanded;
     }
 }

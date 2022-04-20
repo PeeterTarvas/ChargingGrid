@@ -15,6 +15,7 @@ import javax.persistence.Id;
 public class LaadimispunktiSeisundiLiik {
 
     @Id
+    @Column
     private Long laadimispunkti_seisundi_liik_kood;
 
     @Column

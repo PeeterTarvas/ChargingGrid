@@ -16,6 +16,7 @@ import java.sql.Date;
 public class Laadimispunkt {
 
     @Id
+    @Column
     private Long laadimispunkti_kood;
 
     @Column

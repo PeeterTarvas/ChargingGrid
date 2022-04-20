@@ -15,6 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Isik {
     @Id
+    @Column
     private Long isik_id;
 
     @Column

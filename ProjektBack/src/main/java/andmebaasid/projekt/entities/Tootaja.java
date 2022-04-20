@@ -14,6 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Tootaja {
     @Id
+    @Column
     private Long isik_id;
 
     @Column

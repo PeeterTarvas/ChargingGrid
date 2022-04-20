@@ -15,6 +15,7 @@ import javax.persistence.Id;
 public class LaadimispunktiKategooria {
 
     @Id
+    @Column
     private Long laadimispunkti_kategooria_kood;
 
     @Column

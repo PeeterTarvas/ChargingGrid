@@ -3,15 +3,18 @@ package andmebaasid.projekt.services;
 import andmebaasid.projekt.entities.Isik;
 import andmebaasid.projekt.entities.Laadimispunkt;
 import andmebaasid.projekt.dto.LaadimispunktDTO;
+import andmebaasid.projekt.entities.LaadimispunktiKategooria;
+import andmebaasid.projekt.entities.LaadimispunktiKategooriaOmamine;
 import andmebaasid.projekt.repositories.IsikRepository;
 import andmebaasid.projekt.repositories.LaadimispunktRepository;
+import andmebaasid.projekt.repositories.LaadimispunktiKategooriaOmamineRepository;
+import andmebaasid.projekt.repositories.LaadimispunktiKategooriaRepository;
 import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;
 import andmebaasid.projekt.repositories.LaadimispunktiTyypRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -29,12 +32,17 @@ public class LaadimispunktiService {
     private IsikRepository isikRepository;
     @Autowired
     private LaadimispunktiTyypRepository laadimispunktiTyypRepository;
+    @Autowired
+    private LaadimispunktiKategooriaOmamineRepository laadimispunktiKategooriaOmamineRepository;
+    @Autowired
+    private LaadimispunktiKategooriaRepository laadimispunktiKategooriaRepository;
 
     public LaadimispunktDTO mapLaadimispunktToLaadimispunktDTO(Laadimispunkt laadimispunkt) {
         LaadimispunktDTO laadimispunktDTO = new LaadimispunktDTO();
         laadimispunktDTO.setLaadimispunkti_kood(laadimispunkt.getLaadimispunkti_kood());
         laadimispunktDTO.setLaadimispunkti_tyyp_id(laadimispunkt.getLaadimispunkti_tyyp_id());
-        laadimispunktDTO.setLaadimispunkti_seisundi_nimetus(laadimispunktiSeisundiLiikRepository.findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getNimetus());
+        laadimispunktDTO.setLaadimispunkti_seisundi_nimetus(laadimispunktiSeisundiLiikRepository
+                .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getNimetus());
         laadimispunktDTO.setLaadimispunkti_seisundi_liik_kood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood());
         laadimispunktDTO.setNimetus(laadimispunkt.getNimetus());
         laadimispunktDTO.setLaiuskraad(laadimispunkt.getLaiuskraad());
@@ -45,7 +53,19 @@ public class LaadimispunktiService {
         laadimispunktDTO.setEesnimi(isik.getEesnimi());
         laadimispunktDTO.setPerenimi(isik.getPerenimi());
         laadimispunktDTO.setE_post(isik.getE_meil());
-        laadimispunktDTO.setLaadimispunkti_tyyp_nimi(laadimispunktiTyypRepository.findByLaadimispunkti_tyyp_kood(laadimispunkt.getLaadimispunkti_tyyp_id()).getKwh());
+        laadimispunktDTO.setLaadimispunkti_tyyp_nimi(laadimispunktiTyypRepository
+                .findByLaadimispunkti_tyyp_kood(laadimispunkt.getLaadimispunkti_tyyp_id()).getKwh());
+
+        // Klassifikaatorid
+        List<LaadimispunktiKategooriaOmamine> omamised = laadimispunktiKategooriaOmamineRepository.findAll();
+        omamised.removeIf(n -> (!Objects.equals(n.getLaadimispunkti_kood(), laadimispunkt.getLaadimispunkti_kood())));
+        HashMap<Long, String> klassifikaatorid = new LinkedHashMap<>();
+        for (LaadimispunktiKategooriaOmamine omamine : omamised) {
+            LaadimispunktiKategooria laadimispunktiKategooria = laadimispunktiKategooriaRepository
+                    .findKategooriaByKood(omamine.getLaadimispunkti_kategooria_kood());
+            klassifikaatorid.put(laadimispunktiKategooria.getLaadimispunkti_kategooria_kood(), laadimispunktiKategooria.getNimetus());
+        }
+        laadimispunktDTO.setKategooriad(klassifikaatorid);
         return laadimispunktDTO;
     }
 

@@ -15,21 +15,29 @@ export class LaadimispunktComponent implements OnInit {
   laadimispunkt: Laadimispunkt | undefined = undefined;
   form: FormGroup = this.initForm();
   id!: string | null;
+  mapt!: string[];
+  val!: [string, any][]
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private laadimispunkt_service: LaadimispunktServiceService,
     private formBuilder: FormBuilder
-  ) {
+  ) {}
+
+  getValueOnKey(key: string): string {
+    return `${this.val[Number(key) - 1]}`
   }
+
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id !== null && this.id !== 'new') {
       this.laadimispunkt_service.get(BigInt(this.id)).subscribe((data) => {
         this.form = this.initForm(data);
         this.laadimispunkt = data;
-
+        this.mapt = [...Object.keys(data.kategooriad)];
+        this.val = [...Object.entries(data.kategooriad)]
+        console.log(this.val)
       });
     }
   }

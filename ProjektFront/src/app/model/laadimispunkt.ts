@@ -11,4 +11,5 @@ export interface Laadimispunkt {
   eesnimi: string,
   perenimi: string,
   e_post: string,
+  kategooriad: Map<number, string>;
 }

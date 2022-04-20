@@ -88,9 +88,22 @@
 
     <mat-divider></mat-divider>
 
+
+    <mat-label>Kategooria id ja nimetus</mat-label>
+    <ul class="kategooriad">
+      <li *ngFor="let kategooriia of val">
+        <span class="kategooria">{{kategooriia[0]}} {{kategooriia[1]}}</span>
+
+      </li>
+    </ul>
+
+    <mat-divider></mat-divider>
+
     <button mat-raised-button color="basic" class="new-building-btn" (click)="navigateToLaadimispunktList()">
       Back
     </button>
     <button mat-raised-button color="primary" *ngIf="isEndable()"  (click)="lopetaLaadimispunkt()">Lopeta</button>
+
+
   </table>
 </form>

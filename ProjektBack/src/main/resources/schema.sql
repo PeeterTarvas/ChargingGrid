@@ -206,6 +206,7 @@ CREATE TABLE  Tootaja
 
 CREATE TABLE  Laadimispunkt
 (
+
      Laadimispunkti_kood  bigint NOT NULL,
      laiuskraad  decimal(10,4) NOT NULL,
 	 nimetus  varchar(255) UNIQUE NOT NULL,
@@ -218,13 +219,15 @@ CREATE TABLE  Laadimispunkt
 	CONSTRAINT  CHK_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
 	CONSTRAINT  CHK_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),
 	CONSTRAINT  FK_Laadimispunkt_Laadimispunkti_tyyp  FOREIGN KEY ( laadimispunkti_tyyp_id ) REFERENCES  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood ) ON DELETE No Action ON UPDATE No Action,
-    CONSTRAINT FK_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id)
+    CONSTRAINT FK_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id),
+    CONSTRAINT CHK_reg_aeg CHECK ( reg_aeg BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS') AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS')),
+    CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
 )
 ;
 
 CREATE TABLE  Klient 
 (
-	 on_nous_tylitamisega  boolean DEFAULT FALSE,
+	 on_nous_tylitamisega  boolean DEFAULT FALSE NOT NULL,
 	 klassifikaatori_kood_kliendi_seisund  bigint NOT NULL,
 	 isik_id  bigint NOT NULL,
 	CONSTRAINT  PK_Klient  PRIMARY KEY ( isik_id ),

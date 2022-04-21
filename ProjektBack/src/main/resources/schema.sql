@@ -202,7 +202,7 @@ CREATE TABLE  Isik
     CONSTRAINT CHK_on_pere_voi_eesnimi CHECK (( kontrolli_sone(eesnimi) IS TRUE OR kontrolli_sone(perenimi) IS TRUE)), -- vaja yle vaadata
     CONSTRAINT CHK_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  ),
-    CONSTRAINT CHK_elukoht_on_oige CHECK ( kontrolli_sone(elukoht) IS TRUE AND elukoht NOT LIKE '^[0-9\.]+$')
+    CONSTRAINT CHK_elukoht_on_oige CHECK ( kontrolli_sone(elukoht) IS TRUE AND elukoht !~ '^[0-9]+$')
 )
 ;
 

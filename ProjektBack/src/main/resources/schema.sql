@@ -187,7 +187,7 @@ CREATE TABLE  Isik
 	 elukoht  varchar(1024) NOT NULL,
 	 e_meil  varchar(254) NOT NULL,
      riik_kood  varchar(3) NOT NULL,
-	 isiku_seisundi_liik_kood  smallint NOT NULL,
+	 isiku_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
 	CONSTRAINT  PK_Isik  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Isik_Isiku_seisundi_liik  FOREIGN KEY ( isiku_seisundi_liik_kood ) REFERENCES  Isiku_seisundi_liik  ( isiku_seisundi_liik_kood ) ON DELETE No Action  ON UPDATE NO ACTION ,
 	CONSTRAINT  FK_isikukoodi_riik  FOREIGN KEY ( riik_kood ) REFERENCES  Riik  ( riik_kood ) ON DELETE No Action ON UPDATE Cascade,
@@ -214,7 +214,7 @@ CREATE TABLE  Kasutajakonto
 CREATE TABLE  Tootaja 
 (
     isik_id  bigint NOT NULL,
-    tootaja_seisundi_liik_kood  smallint NOT NULL,
+    tootaja_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
 	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE NO action ,
@@ -233,7 +233,7 @@ CREATE TABLE  Laadimispunkt
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  aeg DEFAULT LOCALTIMESTAMP(0),
 	 registreerija_id  bigint NOT NULL,
-	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL,
+	 laadimispunkti_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
      laadimispunkti_tyyp_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkt  PRIMARY KEY ( Laadimispunkti_kood ),
 	CONSTRAINT  CHK_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),

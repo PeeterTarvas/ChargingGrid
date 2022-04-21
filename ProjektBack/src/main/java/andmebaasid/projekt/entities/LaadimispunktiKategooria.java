@@ -19,7 +19,7 @@ public class LaadimispunktiKategooria {
     private Long laadimispunkti_kategooria_kood;
 
     @Column
-    private String nimetus;
+    private String laadimispunkti_kategooria_nimetus;
 
     @Column
     private Long laadimispunkti_kategooria_tyyp_kood;

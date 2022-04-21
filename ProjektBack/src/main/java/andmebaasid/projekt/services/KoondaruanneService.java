@@ -26,7 +26,7 @@ public class KoondaruanneService {
         for (LaadimispunktiSeisundiLiik seisund : seisundid) {
             Koondaruanne koondaruanne = new Koondaruanne();
             koondaruanne.setSeisundi_kood(seisund.getLaadimispunkti_seisundi_liik_kood());
-            koondaruanne.setNimetus(seisund.getNimetus());
+            koondaruanne.setNimetus(seisund.getLaadimispunkti_seisundi_liik_nimetus());
             koondaruanne.setLaadimispunktide_arv(laadimispunktid.getOrDefault(seisund.getLaadimispunkti_seisundi_liik_kood(), 0L));
             koondaruanded.add(koondaruanne);
         }

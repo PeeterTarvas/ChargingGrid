@@ -23,7 +23,7 @@ public class Laadimispunkt {
     private Double laiuskraad;
 
     @Column
-    private String nimetus;
+    private String laadimispunkti_nimetus;
 
     @Column
     private Double pikkuskraad;

@@ -42,9 +42,9 @@ public class LaadimispunktiService {
         laadimispunktDTO.setLaadimispunkti_kood(laadimispunkt.getLaadimispunkti_kood());
         laadimispunktDTO.setLaadimispunkti_tyyp_id(laadimispunkt.getLaadimispunkti_tyyp_id());
         laadimispunktDTO.setLaadimispunkti_seisundi_nimetus(laadimispunktiSeisundiLiikRepository
-                .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getNimetus());
+                .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getLaadimispunkti_seisundi_liik_nimetus());
         laadimispunktDTO.setLaadimispunkti_seisundi_liik_kood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood());
-        laadimispunktDTO.setNimetus(laadimispunkt.getNimetus());
+        laadimispunktDTO.setNimetus(laadimispunkt.getLaadimispunkti_nimetus());
         laadimispunktDTO.setLaiuskraad(laadimispunkt.getLaiuskraad());
         laadimispunktDTO.setPikkuskraad(laadimispunkt.getPikkuskraad());
         laadimispunktDTO.setReg_aeg(laadimispunkt.getReg_aeg());
@@ -63,7 +63,7 @@ public class LaadimispunktiService {
         for (LaadimispunktiKategooriaOmamine omamine : omamised) {
             LaadimispunktiKategooria laadimispunktiKategooria = laadimispunktiKategooriaRepository
                     .findKategooriaByKood(omamine.getLaadimispunkti_kategooria_kood());
-            klassifikaatorid.put(laadimispunktiKategooria.getLaadimispunkti_kategooria_kood(), laadimispunktiKategooria.getNimetus());
+            klassifikaatorid.put(laadimispunktiKategooria.getLaadimispunkti_kategooria_kood(), laadimispunktiKategooria.getLaadimispunkti_kategooria_nimetus());
         }
         laadimispunktDTO.setKategooriad(klassifikaatorid);
         return laadimispunktDTO;
@@ -85,7 +85,7 @@ public class LaadimispunktiService {
         List<LaadimispunktDTO> laadimispunktList = new LinkedList<>();
         for (Laadimispunkt laadimispunkt : laadimispunktRepository.findAll()) {
             if (Objects.equals(laadimispunktiSeisundiLiikRepository
-                    .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getNimetus(), "aktiivne")) {
+                    .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getLaadimispunkti_seisundi_liik_nimetus(), "aktiivne")) {
                 laadimispunktList.add(mapLaadimispunktToLaadimispunktDTO(laadimispunkt));
             }
         }
@@ -96,7 +96,7 @@ public class LaadimispunktiService {
         List<LaadimispunktDTO> laadimispunktList = new LinkedList<>();
         for (Laadimispunkt laadimispunkt : laadimispunktRepository.findAll()) {
             if (Objects.equals(laadimispunktiSeisundiLiikRepository
-                    .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getNimetus(), "mitteaktiivne")) {
+                    .findByLaadimispunktiSeisundiLiikKood(laadimispunkt.getLaadimispunkti_seisundi_liik_kood()).getLaadimispunkti_seisundi_liik_nimetus(), "mitteaktiivne")) {
                 laadimispunktList.add(mapLaadimispunktToLaadimispunktDTO(laadimispunkt));
             }
         }

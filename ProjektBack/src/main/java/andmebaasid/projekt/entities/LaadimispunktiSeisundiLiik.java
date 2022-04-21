@@ -19,5 +19,5 @@ public class LaadimispunktiSeisundiLiik {
     private Long laadimispunkti_seisundi_liik_kood;
 
     @Column
-    private String nimetus;
+    private String laadimispunkti_seisundi_liik_nimetus;
 }

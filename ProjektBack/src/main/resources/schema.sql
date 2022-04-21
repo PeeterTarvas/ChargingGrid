@@ -59,7 +59,6 @@ DROP TABLE IF EXISTS Tootaja_rolli_omamine CASCADE
 
 DROP DOMAIN IF EXISTS aeg CASCADE;
 
-
 DROP DOMAIN IF EXISTS nimetus CASCADE;
 
 
@@ -74,10 +73,10 @@ CREATE DOMAIN nimetus AS varchar(255) CHECK ( TRIM(VALUE ) <> '');
 CREATE TABLE  Riik 
 (
 	 riik_kood  varchar(3) UNIQUE NOT NULL,
-	 nimetus  varchar(60) UNIQUE  NOT NULL,
+	 riik_nimetus  varchar(60) UNIQUE  NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_riik_kood_on_oige CHECK ( riik_kood <> '' AND riik_kood ~* '[A-Z]' AND LENGTH(riik_kood) = 3),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+     CONSTRAINT CHK_nimetus CHECK ( riik_nimetus <> '')
 
 
 )
@@ -87,7 +86,7 @@ CREATE TABLE  Tootaja_roll
 (
 	 kirjeldus  TEXT	NOT NULL,
 	 tootaja_roll_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 tootaja_roll_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Tootaja_roll  PRIMARY KEY ( tootaja_roll_kood ),
      CONSTRAINT CHK_kirjeldus CHECK ( kirjeldus <> '')
 
@@ -99,7 +98,7 @@ CREATE TABLE  Tootaja_roll
 CREATE TABLE  Tootaja_seisundi_liik 
 (
 	 tootaja_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 tootaja_seisundi_liik_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Tootaja_seisundi_liik  PRIMARY KEY ( tootaja_seisundi_liik_kood )
 
 )
@@ -108,7 +107,7 @@ CREATE TABLE  Tootaja_seisundi_liik
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
 	 laadimispunkti_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 laadimispunkti_seisundi_liik_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood )
 
 )
@@ -117,7 +116,7 @@ CREATE TABLE  Laadimispunkti_seisundi_liik
 CREATE TABLE  Laadimispunkti_kategooria_tyyp 
 (
 	 laadimispunkti_kategooria_tyyp_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 laadimispunkti_kategooira_tyyp_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood )
 )
 ;
@@ -125,7 +124,7 @@ CREATE TABLE  Laadimispunkti_kategooria_tyyp
 CREATE TABLE  Kliendi_seisundi_liik 
 (
 	 kliendi_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 kliendi_seisundi_liik_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Kliendi_seisundi_liik  PRIMARY KEY ( kliendi_seisundi_liik_kood )
 )
 ;
@@ -133,7 +132,7 @@ CREATE TABLE  Kliendi_seisundi_liik
 CREATE TABLE  Isiku_seisundi_liik 
 (
 	 isiku_seisundi_liik_kood smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 isiku_seisundi_liik_nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood )
 
 )
@@ -152,9 +151,9 @@ CREATE TABLE  Laadimispunkti_tyyp
 CREATE TABLE  Laadimispunkti_kategooria 
 (
 	 laadimispunkti_kategooria_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 laadimispunkti_kategooria_nimetus  nimetus NOT NULL,
 	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood, nimetus ),
+	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus ),
 	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE
 
 )
@@ -214,7 +213,7 @@ CREATE TABLE  Laadimispunkt
 
      Laadimispunkti_kood  bigint NOT NULL,
      laiuskraad  decimal(10,4) NOT NULL,
-	 nimetus  nimetus UNIQUE NOT NULL,
+	 laadimispunkti_nimetus  nimetus UNIQUE NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  aeg NOT NULL DEFAULT CURRENT_TIMESTAMP(0)::timestamp without time zone,
 	 registreerija_id  bigint NOT NULL,

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>f560b433-bb5d-42cf-8066-9d47cdb96096.SCHEMA:postgres.public</OriginalElement>
+  <nodes>
+    <node x="1545.0" y="656.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria</node>
+    <node x="1035.5" y="441.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.klient</node>
+    <node x="855.5" y="430.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.kasutajakonto</node>
+    <node x="340.5" y="601.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkt</node>
+    <node x="1087.1780303030303" y="215.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.kliendi_seisundi_liik</node>
+    <node x="584.3636363636363" y="215.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_seisundi_liik</node>
+    <node x="1319.5" y="441.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_roll</node>
+    <node x="355.5" y="452.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_tyyp</node>
+    <node x="615.5" y="441.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja</node>
+    <node x="977.75" y="0.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.riik</node>
+    <node x="930.8181818181818" y="860.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria_omamine</node>
+    <node x="56.5" y="452.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_seisundi_liik</node>
+    <node x="956.7916666666665" y="634.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_rolli_omamine</node>
+    <node x="733.75" y="0.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isiku_seisundi_liik</node>
+    <node x="855.0" y="127.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik</node>
+    <node x="1530.5" y="452.0">f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria_tyyp</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isiku_seisundi_liik" relationship="REFERENCES">
+      <point x="-48.75" y="-126.5" />
+      <point x="903.75" y="102.0" />
+      <point x="845.75" y="102.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria_omamine" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria" relationship="REFERENCES">
+      <point x="70.0" y="-38.0" />
+      <point x="1140.8181818181818" y="835.0" />
+      <point x="1682.0" y="835.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria_tyyp" relationship="REFERENCES">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.riik" relationship="REFERENCES">
+      <point x="48.75" y="-126.5" />
+      <point x="1001.25" y="102.0" />
+      <point x="1059.25" y="102.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik" relationship="REFERENCES">
+      <point x="55.0" y="-49.5" />
+      <point x="780.5" y="405.0" />
+      <point x="952.5" y="405.0" />
+      <point x="0.0" y="126.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.klient" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik" relationship="REFERENCES">
+      <point x="-66.0" y="-49.5" />
+      <point x="1101.5" y="405.0" />
+      <point x="952.5" y="405.0" />
+      <point x="0.0" y="126.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_rolli_omamine" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_roll" relationship="REFERENCES">
+      <point x="61.5" y="-71.5" />
+      <point x="1141.2916666666665" y="576.0" />
+      <point x="1415.0" y="576.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_kategooria_omamine" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkt" relationship="REFERENCES">
+      <point x="-70.0" y="-38.0" />
+      <point x="1000.8181818181818" y="835.0" />
+      <point x="465.5" y="835.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.kasutajakonto" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.isik" relationship="REFERENCES">
+      <point x="0.0" y="-60.5" />
+      <point x="935.5" y="405.0" />
+      <point x="952.5" y="405.0" />
+      <point x="0.0" y="126.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" relationship="REFERENCES">
+      <point x="-73.33333333333331" y="49.5" />
+      <point x="652.1666666666667" y="560.0" />
+      <point x="595.5" y="560.0" />
+      <point x="595.5" y="490.5" />
+      <point x="-110.0" y="-0.0" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkt" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_seisundi_liik" relationship="REFERENCES">
+      <point x="-83.33333333333331" y="-104.5" />
+      <point x="382.16666666666674" y="576.0" />
+      <point x="196.0" y="576.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_rolli_omamine" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" relationship="REFERENCES">
+      <point x="-61.5" y="-71.5" />
+      <point x="1018.2916666666665" y="576.0" />
+      <point x="798.8333333333333" y="576.0" />
+      <point x="73.33333333333331" y="49.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkt" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" relationship="REFERENCES">
+      <point x="83.33333333333331" y="-104.5" />
+      <point x="548.8333333333333" y="576.0" />
+      <point x="725.5" y="576.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkt" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.laadimispunkti_tyyp" relationship="REFERENCES">
+      <point x="1.4210854715202004E-14" y="-104.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.tootaja_seisundi_liik" relationship="REFERENCES">
+      <point x="-55.0" y="-49.5" />
+      <point x="670.5" y="405.0" />
+      <point x="703.3636363636363" y="405.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.klient" target="f560b433-bb5d-42cf-8066-9d47cdb96096.TABLE:postgres.public.kliendi_seisundi_liik" relationship="REFERENCES">
+      <point x="66.0" y="-49.5" />
+      <point x="1233.5" y="405.0" />
+      <point x="1205.1780303030303" y="405.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5598705501618123" showDependencies="false" x="917.0" y="468.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

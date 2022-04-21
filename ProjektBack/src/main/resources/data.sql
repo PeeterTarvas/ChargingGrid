@@ -24,6 +24,9 @@ VALUES (0, 'elus');
 INSERT INTO tootaja_roll(tootaja_roll_kood, kirjeldus, tootaja_roll_nimetus)
  VALUES (0, 'juhatab', 'Juhataja');
 
+INSERT INTO tootaja_roll(tootaja_roll_kood, kirjeldus, tootaja_roll_nimetus)
+VALUES (3, 'juhatab', '   ');
+
 INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood, kWh)
 VALUES (0, 20);
 

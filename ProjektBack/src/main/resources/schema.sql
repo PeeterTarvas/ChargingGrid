@@ -168,9 +168,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 	 laadimispunkti_kategooria_tyyp_kood  smallint NOT NULL, -- vaja yle vaadata
 	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood ),
 	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE NO ACTION ,
-     CONSTRAINT AK_laadimispunkti_kategooria_kood_nimetus UNIQUE(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus),
-     CONSTRAINT AK_laadimispunkti_kategooria_nimetus UNIQUE(laadimispunkti_kategooria_nimetus)
-
+     CONSTRAINT AK_laadimispunkti_kategooria_kood_nimetus UNIQUE(laadimispunkti_kategooria_tyyp_kood, laadimispunkti_kategooria_nimetus)
 
 
 )
@@ -194,7 +192,6 @@ CREATE TABLE  Isik
     CONSTRAINT AK_id_riik UNIQUE (isikukood, riik_kood),
     CONSTRAINT CHK_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ((eesnimi IS NOT NULL OR perenimi IS NOT NULL) AND ( eesnimi <> '' OR perenimi <> '')), -- vaja yle vaadata
-    CONSTRAINT CHK_elukoht CHECK (TRIM(elukoht) <> '' AND elukoht NOT LIKE '^\d+\.?\d+$'), --TRIM vaja yle vaadata
     CONSTRAINT CHK_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  )
 )
@@ -236,12 +233,12 @@ CREATE TABLE  Laadimispunkt
 	 laadimispunkti_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
      laadimispunkti_tyyp_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkt  PRIMARY KEY ( Laadimispunkti_kood ),
-	CONSTRAINT  CHK_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
-	CONSTRAINT  CHK_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),
+	CONSTRAINT  CHK_Laadimispunkt_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
+	CONSTRAINT  CHK_Laadimispunkt_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),
 	CONSTRAINT  FK_Laadimispunkt_Laadimispunkti_tyyp  FOREIGN KEY ( laadimispunkti_tyyp_kood ) REFERENCES  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE ,
-    CONSTRAINT FK_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id) ON UPDATE CASCADE,
+    CONSTRAINT FK_Laadimispunkt_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id) ON UPDATE CASCADE,
     CONSTRAINT FK_laadiimis_seisundi_liik_kood FOREIGN KEY (laadimispunkti_seisundi_liik_kood) REFERENCES laadimispunkti_seisundi_liik(laadimispunkti_seisundi_liik_kood),
-    CONSTRAINT AK_laadimimispunkkti_nimi UNIQUE(laadimispunkti_nimetus)
+    CONSTRAINT AK_Laadimispunkt_laadimimispunkkti_nimi UNIQUE(laadimispunkti_nimetus)
 )
 ;
 

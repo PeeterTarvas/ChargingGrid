@@ -60,8 +60,13 @@ DROP TABLE IF EXISTS Tootaja_rolli_omamine CASCADE
 DROP DOMAIN IF EXISTS aeg CASCADE;
 
 
-CREATE DOMAIN aeg AS TIMESTAMP(0) WITHOUT TIME ZONE CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS') AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
+DROP DOMAIN IF EXISTS nimetus CASCADE;
 
+
+CREATE DOMAIN aeg AS TIMESTAMP(0) WITHOUT TIME ZONE CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
+    AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
+
+CREATE DOMAIN nimetus AS varchar(255) CHECK ( TRIM(VALUE ) <> '');
 
 /* Create Tables */
 
@@ -82,9 +87,8 @@ CREATE TABLE  Tootaja_roll
 (
 	 kirjeldus  TEXT	NOT NULL,
 	 tootaja_roll_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
+	 nimetus  nimetus UNIQUE NOT NULL,
 	CONSTRAINT  PK_Tootaja_roll  PRIMARY KEY ( tootaja_roll_kood ),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> ''),
      CONSTRAINT CHK_kirjeldus CHECK ( kirjeldus <> '')
 
 
@@ -95,9 +99,8 @@ CREATE TABLE  Tootaja_roll
 CREATE TABLE  Tootaja_seisundi_liik 
 (
 	 tootaja_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
-	CONSTRAINT  PK_Tootaja_seisundi_liik  PRIMARY KEY ( tootaja_seisundi_liik_kood ),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	 nimetus  nimetus UNIQUE NOT NULL,
+	CONSTRAINT  PK_Tootaja_seisundi_liik  PRIMARY KEY ( tootaja_seisundi_liik_kood )
 
 )
 ;
@@ -105,9 +108,8 @@ CREATE TABLE  Tootaja_seisundi_liik
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
 	 laadimispunkti_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood ),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	 nimetus  nimetus UNIQUE NOT NULL,
+	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood )
 
 )
 ;
@@ -115,27 +117,24 @@ CREATE TABLE  Laadimispunkti_seisundi_liik
 CREATE TABLE  Laadimispunkti_kategooria_tyyp 
 (
 	 laadimispunkti_kategooria_tyyp_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
-	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood ),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	 nimetus  nimetus UNIQUE NOT NULL,
+	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood )
 )
 ;
 
 CREATE TABLE  Kliendi_seisundi_liik 
 (
 	 kliendi_seisundi_liik_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
-	CONSTRAINT  PK_Kliendi_seisundi_liik  PRIMARY KEY ( kliendi_seisundi_liik_kood ),
-	CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	 nimetus  nimetus UNIQUE NOT NULL,
+	CONSTRAINT  PK_Kliendi_seisundi_liik  PRIMARY KEY ( kliendi_seisundi_liik_kood )
 )
 ;
 
 CREATE TABLE  Isiku_seisundi_liik 
 (
 	 isiku_seisundi_liik_kood smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
-	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood ),
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	 nimetus  nimetus UNIQUE NOT NULL,
+	CONSTRAINT  PK_Isiku_seisundi_liik  PRIMARY KEY ( isiku_seisundi_liik_kood )
 
 )
 ;
@@ -153,11 +152,10 @@ CREATE TABLE  Laadimispunkti_tyyp
 CREATE TABLE  Laadimispunkti_kategooria 
 (
 	 laadimispunkti_kategooria_kood  smallserial UNIQUE NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
+	 nimetus  nimetus UNIQUE NOT NULL,
 	 laadimispunkti_kategooria_tyyp_kood  bigint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood, nimetus ),
-	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE,
-     CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE
 
 )
 ;
@@ -180,7 +178,7 @@ CREATE TABLE  Isik
     CONSTRAINT AK_id_riik UNIQUE (isikukood, isikukoodi_riik),
     CONSTRAINT CHK_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ( eesnimi <> '' OR perenimi <> ''),
-    CONSTRAINT CHK_elukoht CHECK (elukoht <> '' AND elukoht NOT LIKE '^\d+\.?\d+$'),
+    CONSTRAINT CHK_elukoht CHECK (TRIM(elukoht) <> '' AND elukoht NOT LIKE '^\d+\.?\d+$'),
     CONSTRAINT CHK_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))
                                         AND reg_aeg::date > synni_kp )
 )
@@ -194,7 +192,7 @@ CREATE TABLE  Kasutajakonto
 	 kasutajakonto_id  BIGSERIAL NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( kasutajakonto_id ),
 	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT CHK_parool CHECK ( parool <> '')
+	CONSTRAINT CHK_parool CHECK ( TRIM(parool) <> '')
 )
 ;
 
@@ -216,7 +214,7 @@ CREATE TABLE  Laadimispunkt
 
      Laadimispunkti_kood  bigint NOT NULL,
      laiuskraad  decimal(10,4) NOT NULL,
-	 nimetus  varchar(255) UNIQUE NOT NULL,
+	 nimetus  nimetus UNIQUE NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  aeg NOT NULL DEFAULT CURRENT_TIMESTAMP(0)::timestamp without time zone,
 	 registreerija_id  bigint NOT NULL,
@@ -226,8 +224,7 @@ CREATE TABLE  Laadimispunkt
 	CONSTRAINT  CHK_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
 	CONSTRAINT  CHK_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),
 	CONSTRAINT  FK_Laadimispunkt_Laadimispunkti_tyyp  FOREIGN KEY ( laadimispunkti_tyyp_id ) REFERENCES  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood ) ON DELETE No Action ON UPDATE No Action,
-    CONSTRAINT FK_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id),
-    CONSTRAINT CHK_nimetus CHECK ( nimetus <> '')
+    CONSTRAINT FK_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id)
 )
 ;
 

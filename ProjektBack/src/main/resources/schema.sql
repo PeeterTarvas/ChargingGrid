@@ -61,22 +61,13 @@ DROP DOMAIN IF EXISTS aeg CASCADE;
 
 DROP DOMAIN IF EXISTS nimetus CASCADE;
 
-CREATE OR REPLACE FUNCTION kontrolli_sone(nimteus varchar)
-returns BOOLEAN AS $$
-    BEGIN
-RETURN nimteus IS NOT null AND TRIM(nimteus) <> '' AND REPLACE(TRIM(nimteus ),'\t', '') <> '' AND REPLACE(TRIM(nimteus ),'\n', '') <> '';
-    END
-$$
-    LANGUAGE plpgsql;
-
 
 CREATE DOMAIN aeg AS TIMESTAMP(0)WITHOUT TIME ZONE NOT NULL CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
     AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
 
-CREATE DOMAIN nimetus AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK (kontrolli_sone(VALUE) = true);
+CREATE DOMAIN nimetus AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK ( VALUE !~ '^[[:space:]]*$');
 
 /* Create Tables */
-
 
 CREATE TABLE  Riik 
 (
@@ -84,7 +75,7 @@ CREATE TABLE  Riik
 	 riik_nimetus  varchar(60) UNIQUE  NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_riik_kood_on_oige CHECK ( riik_kood ~ '[A-Z]{3}'),
-     CONSTRAINT CHK_nimetus CHECK ( kontrolli_sone(riik_nimetus))
+     CONSTRAINT CHK_nimetus CHECK ( riik_nimetus !~ '^[[:space:]]*$')
 
 
 )
@@ -96,7 +87,7 @@ CREATE TABLE  Tootaja_roll
     kirjeldus  TEXT,
 	 tootaja_roll_nimetus  nimetus,
 	 CONSTRAINT  PK_Tootaja_roll  PRIMARY KEY ( tootaja_roll_kood ),
-     CONSTRAINT CHK_kirjeldus CHECK ( kirjeldus <> ''), --vaja vaadata
+     CONSTRAINT CHK_kirjeldus_ei_tohi_olla_tyhi CHECK ( kirjeldus !~ '^[[:space:]]*$'),
      CONSTRAINT AK_tootaja_roll_nimetus UNIQUE(tootaja_roll_nimetus)
 
 
@@ -199,10 +190,10 @@ CREATE TABLE  Isik
 	CONSTRAINT  FK_isikukoodi_riik  FOREIGN KEY ( riik_kood ) REFERENCES  Riik  ( riik_kood ) ON DELETE No Action ON UPDATE Cascade,
     CONSTRAINT AK_id_riik UNIQUE (isikukood, riik_kood),
     CONSTRAINT CHK_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
-    CONSTRAINT CHK_on_pere_voi_eesnimi CHECK (( kontrolli_sone(eesnimi) IS TRUE OR kontrolli_sone(perenimi) IS TRUE)), -- vaja yle vaadata
+    CONSTRAINT CHK_on_pere_voi_eesnimi CHECK ((perenimi IS NOT NULL OR eesnimi IS NOT NULL) AND (perenimi !~ '^[[:space:]]*$' OR eesnimi !~ '^[[:space:]]*$')),
     CONSTRAINT CHK_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  ),
-    CONSTRAINT CHK_elukoht_on_oige CHECK ( kontrolli_sone(elukoht) IS TRUE AND elukoht !~ '^[0-9]+$')
+    CONSTRAINT CHK_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$')
 )
 ;
 
@@ -213,7 +204,7 @@ CREATE TABLE  Kasutajakonto
 	 on_aktiivne  boolean DEFAULT TRUE NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE NO ACTION ON UPDATE NO ACTION ,
-	CONSTRAINT CHK_parool_ei_ole_tyhi CHECK ( kontrolli_sone(parool) IS TRUE)
+	CONSTRAINT CHK_parool_ei_ole_tyhi CHECK ( parool !~ '^[[:space:]]*$')
 )
 ;
 
@@ -226,7 +217,7 @@ CREATE TABLE  Tootaja
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE NO action ,
 	CONSTRAINT  FK_Tootaja_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT  FK_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE SET NULL ON UPDATE No Action,
-    CONSTRAINT CHK_check_if_mentor_and_id_dont_match CHECK( isik_id != mentor )
+    CONSTRAINT CHK_isik_ja_mentor_ei_ole_samad CHECK( isik_id != mentor )
 )
 ;
 

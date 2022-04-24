@@ -41,7 +41,7 @@ public class Isik {
     private String e_meil;
 
     @Column
-    private String isikukoodi_riik;
+    private String riik_kood;
 
     @Column
     private Long isiku_seisundi_liik_kood;

@@ -1,6 +1,6 @@
 package andmebaasid.projekt.controller;
 
-import andmebaasid.projekt.entities.Koondaruanne;
+import andmebaasid.projekt.dto.KoondaruanneDTO;
 import andmebaasid.projekt.dto.LaadimispunktDTO;
 import andmebaasid.projekt.services.KoondaruanneService;
 import andmebaasid.projekt.services.LaadimispunktiService;
@@ -46,7 +46,7 @@ public class LaadimispunktController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/koondaruanne")
-    public List<Koondaruanne> getAllKoondaruanne() {
+    public List<KoondaruanneDTO> getAllKoondaruanne() {
         return koondaruanneService.getAllKoondaruanne();
     }
 

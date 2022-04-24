@@ -12,14 +12,12 @@ import javax.persistence.Id;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Tootaja {
+public class LaadimispunktiKategooriaTyyp {
+
     @Id
     @Column
-    private Long isik_id;
+    private Integer laadimispunkti_kategooria_tyyp_kood;
 
     @Column
-    private Long mentor;
-
-    @Column
-    private Long klassifikaatori_kood;
+    private String laadimispunkti_kategooria_tyyp_nimetus;
 }

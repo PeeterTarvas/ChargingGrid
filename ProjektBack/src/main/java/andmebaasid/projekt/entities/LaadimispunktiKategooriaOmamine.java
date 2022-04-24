@@ -23,5 +23,5 @@ public class LaadimispunktiKategooriaOmamine {
 
     @Id
     @Column
-    private Long laadimispunkti_kategooria_kood;
+    private Integer laadimispunkti_kategooria_kood;
 }

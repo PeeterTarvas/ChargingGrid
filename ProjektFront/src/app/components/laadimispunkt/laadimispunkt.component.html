@@ -89,13 +89,17 @@
     <mat-divider></mat-divider>
 
 
-    <mat-label>Kategooria id ja nimetus</mat-label>
-    <ul class="kategooriad">
-      <li *ngFor="let kategooriia of val">
-        <span class="kategooria">{{kategooriia[0]}} {{kategooriia[1]}}</span>
+    <mat-label>Kategooriad</mat-label>
+    <tr>
+      <td colspan="2">
+        <ul class="kategooriad">
+          <li *ngFor="let kategooria of val">
+            <span class="kategooria">{{kategooria[1].kategooriaTyypNimeus}}: (id: {{kategooria[0]}}) {{kategooria[1].kategooriaNimetus}}</span>
+          </li>
+        </ul>
+      </td>
+    </tr>
 
-      </li>
-    </ul>
 
     <mat-divider></mat-divider>
 

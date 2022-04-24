@@ -1,4 +1,4 @@
-package andmebaasid.projekt.entities;
+package andmebaasid.projekt.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Koondaruanne {
+public class KoondaruanneDTO {
     private Long seisundi_kood;
     private String nimetus;
     private Long laadimispunktide_arv;

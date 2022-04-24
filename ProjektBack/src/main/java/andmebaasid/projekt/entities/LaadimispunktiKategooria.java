@@ -16,11 +16,11 @@ public class LaadimispunktiKategooria {
 
     @Id
     @Column
-    private Long laadimispunkti_kategooria_kood;
+    private Integer laadimispunkti_kategooria_kood;
 
     @Column
     private String laadimispunkti_kategooria_nimetus;
 
     @Column
-    private Long laadimispunkti_kategooria_tyyp_kood;
+    private Integer laadimispunkti_kategooria_tyyp_kood;
 }

@@ -120,9 +120,9 @@ CREATE TABLE  Laadimispunkti_seisundi_liik
 CREATE TABLE  Laadimispunkti_kategooria_tyyp 
 (
 	 laadimispunkti_kategooria_tyyp_kood  smallint NOT NULL,
-	 laadimispunkti_kategooira_tyyp_nimetus  nimetus,
+	 laadimispunkti_kategooria_tyyp_nimetus  nimetus,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_tyyp  PRIMARY KEY ( laadimispunkti_kategooria_tyyp_kood ),
-     CONSTRAINT AK_laadimispunkti_kategooira_tyyp_nimetus UNIQUE(laadimispunkti_kategooira_tyyp_nimetus)
+     CONSTRAINT AK_laadimispunkti_kategooiria_tyyp_nimetus UNIQUE(laadimispunkti_kategooria_tyyp_nimetus)
 
 )
 ;

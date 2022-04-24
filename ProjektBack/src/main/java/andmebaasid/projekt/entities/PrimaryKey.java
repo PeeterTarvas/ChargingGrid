@@ -17,5 +17,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PrimaryKey implements Serializable {
     private Long laadimispunkti_kood;
-    private Long laadimispunkti_kategooria_kood;
+    private Integer laadimispunkti_kategooria_kood;
 }

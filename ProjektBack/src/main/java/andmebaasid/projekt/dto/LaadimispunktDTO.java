@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -24,5 +24,5 @@ public class LaadimispunktDTO {
     private String perenimi;
     private String e_post;
     private Long laadimispunkti_tyyp_nimi;
-    private HashMap<Long, String> kategooriad;
+    private Map<Integer, KategooriaDTO> kategooriad;
 }

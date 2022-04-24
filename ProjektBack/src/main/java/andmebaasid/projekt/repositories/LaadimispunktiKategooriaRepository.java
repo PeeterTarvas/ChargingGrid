@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface LaadimispunktiKategooriaRepository extends JpaRepository<LaadimispunktiKategooria, Integer> {
 
     @Query("SELECT l FROM LaadimispunktiKategooria l WHERE l.laadimispunkti_kategooria_kood=:kood")
-    LaadimispunktiKategooria findKategooriaByKood(Long kood);
+    LaadimispunktiKategooria findKategooriaByKood(Integer kood);
 }

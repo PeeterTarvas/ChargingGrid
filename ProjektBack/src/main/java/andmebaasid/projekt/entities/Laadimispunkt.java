@@ -38,5 +38,5 @@ public class Laadimispunkt {
     private Long laadimispunkti_seisundi_liik_kood;
 
     @Column
-    private Long laadimispunkti_tyyp_id;
+    private Long laadimispunkti_tyyp_kood;
 }

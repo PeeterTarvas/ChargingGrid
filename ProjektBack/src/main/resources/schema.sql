@@ -194,7 +194,7 @@ CREATE TABLE  Isik
     CONSTRAINT CHK_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  ),
     CONSTRAINT CHK_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$'),
-    CONSTRAINT CHK_isikukood_oigsus CHECK (elukoht ~* '[A-Z0-9\s+=\/-]')
+    CONSTRAINT CHK_isikukood_oigsus CHECK (isikukood ~ '^[[:alnum:][:space:]/+=-]+$')
 )
 ;
 

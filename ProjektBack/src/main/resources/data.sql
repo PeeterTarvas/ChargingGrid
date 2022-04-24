@@ -33,7 +33,7 @@ INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood, kWh)
 VALUES (1, 40);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
-VALUES ('11111111', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Afganistaan', 'peetertarvas@gmail.com', 'EST', default);
+VALUES ('1a-b1/1 +1', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Afganistaan', 'peetertarvas@gmail.com', 'EST', default);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
 VALUES ('11111112', '29-09-1999'::date, 'Rahul', 'Kersna', 'Kehra', 'veetertarvas@gmail.com', 'EST', default);

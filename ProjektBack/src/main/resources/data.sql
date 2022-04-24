@@ -36,7 +36,7 @@ INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_k
 VALUES ('11111111', '30-09-1999'::date, 'Peeter', 'Tarvas', 'Afganistaan', 'peetertarvas@gmail.com', 'EST', default);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
-VALUES ('11111112', '29-09-1999'::date, 'Eeter', 'Tarvas', 'Kehra', 'veetertarvas@gmail.com', 'EST', default);
+VALUES ('11111112', '29-09-1999'::date, 'Rahul', 'Kersna', 'Kehra', 'veetertarvas@gmail.com', 'EST', default);
 
 INSERT INTO isik(isikukood, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
 VALUES ('11111113', '29-09-1999'::date, 'Eeter', '', 'Kehra', 'eetertarvas@gmail.com', 'EST', default);

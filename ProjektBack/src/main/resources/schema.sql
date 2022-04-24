@@ -62,7 +62,7 @@ DROP DOMAIN IF EXISTS aeg CASCADE;
 DROP DOMAIN IF EXISTS nimetus CASCADE;
 
 
-CREATE DOMAIN aeg AS TIMESTAMP(0)WITHOUT TIME ZONE NOT NULL CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
+CREATE DOMAIN aeg AS TIMESTAMP(0)WITHOUT TIME ZONE NOT NULL DEFAULT LOCALTIMESTAMP(0) CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
     AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
 
 CREATE DOMAIN nimetus AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK ( VALUE !~ '^[[:space:]]*$');
@@ -75,7 +75,7 @@ CREATE TABLE  Riik
 	 riik_nimetus  varchar(60) UNIQUE  NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_Riik_kood_on_oige CHECK ( riik_kood ~ '[A-Z]{3}'),
-     CONSTRAINT CHK_Riik_nimetus CHECK ( riik_nimetus !~ '^[[:space:]]*$')
+     CONSTRAINT CHK_Riik_riik_nimetus_ei_ole_tyhi CHECK ( riik_nimetus !~ '^[[:space:]]*$')
 
 
 )
@@ -178,7 +178,7 @@ CREATE TABLE  Isik
      isik_id  BIGSERIAL UNIQUE NOT NULL,
 	 isikukood  nimetus,
 	 synni_kp  date NOT NULL,
-	 reg_aeg  aeg DEFAULT LOCALTIMESTAMP(0),
+	 reg_aeg  aeg,
 	 eesnimi  varchar(1024),
 	 perenimi  varchar(1024),
 	 elukoht  varchar(1024) NOT NULL,
@@ -213,7 +213,7 @@ CREATE TABLE  Kasutajakonto
 CREATE TABLE  Tootaja 
 (
     isik_id  bigint NOT NULL,
-    tootaja_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
+    tootaja_seisundi_liik_kood  smallint NOT NULL,
 	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE NO action ,
@@ -230,7 +230,7 @@ CREATE TABLE  Laadimispunkt
      laiuskraad  decimal(10,4) NOT NULL,
 	 laadimispunkti_nimetus  nimetus NOT NULL,
 	 pikkuskraad  decimal(10,4) NOT NULL,
-	 reg_aeg  aeg DEFAULT LOCALTIMESTAMP(0),
+	 reg_aeg  aeg,
 	 registreerija_id  bigint NOT NULL,
 	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL,
      laadimispunkti_tyyp_kood  smallint NOT NULL,

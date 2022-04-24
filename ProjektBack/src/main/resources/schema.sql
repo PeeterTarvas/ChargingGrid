@@ -75,7 +75,7 @@ CREATE TABLE  Riik
 	 riik_nimetus  varchar(60) UNIQUE  NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_Riik_kood_on_oige CHECK ( riik_kood ~ '[A-Z]{3}'),
-     CONSTRAINT CHK__Riik_nimetus CHECK ( riik_nimetus !~ '^[[:space:]]*$')
+     CONSTRAINT CHK_Riik_nimetus CHECK ( riik_nimetus !~ '^[[:space:]]*$')
 
 
 )
@@ -109,9 +109,9 @@ CREATE TABLE  Tootaja_seisundi_liik
 CREATE TABLE  Laadimispunkti_seisundi_liik 
 (
 	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL,
-	 laadimispunkti_seisundi_liik_nimetus  nimetus DEFAULT 'elus',
+	 laadimispunkti_seisundi_liik_nimetus  nimetus,
 	CONSTRAINT  PK_Laadimispunkti_seisundi_liik  PRIMARY KEY ( laadimispunkti_seisundi_liik_kood ),
-     CONSTRAINT AK__laadimispunkti_seisundi_liik_nimetus UNIQUE(laadimispunkti_seisundi_liik_nimetus)
+     CONSTRAINT AK_laadimispunkti_seisundi_liik_nimetus UNIQUE(laadimispunkti_seisundi_liik_nimetus)
 
 
 )
@@ -166,7 +166,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 	 laadimispunkti_kategooria_nimetus  nimetus,
 	 laadimispunkti_kategooria_tyyp_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria  PRIMARY KEY ( laadimispunkti_kategooria_kood ),
-	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE NO ACTION ,
+	CONSTRAINT  FK_Laadimispunkti_kategooria_tyyp_kood  FOREIGN KEY ( laadimispunkti_kategooria_tyyp_kood ) REFERENCES  Laadimispunkti_kategooria_tyyp  ( laadimispunkti_kategooria_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE ,
      CONSTRAINT AK_Laadimispunkti_kategooria_kood_nimetus UNIQUE(laadimispunkti_kategooria_tyyp_kood, laadimispunkti_kategooria_nimetus)
 
 
@@ -176,7 +176,7 @@ CREATE TABLE  Laadimispunkti_kategooria
 CREATE TABLE  Isik 
 (
      isik_id  BIGSERIAL UNIQUE NOT NULL,
-	 isikukood  nimetus NOT NULL,
+	 isikukood  nimetus,
 	 synni_kp  date NOT NULL,
 	 reg_aeg  aeg DEFAULT LOCALTIMESTAMP(0),
 	 eesnimi  varchar(1024),
@@ -184,13 +184,14 @@ CREATE TABLE  Isik
 	 elukoht  varchar(1024) NOT NULL,
 	 e_meil  varchar(254) NOT NULL,
      riik_kood  varchar(3) NOT NULL,
-	 isiku_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
+	 isiku_seisundi_liik_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Isik  PRIMARY KEY ( isik_id ),
-	CONSTRAINT  FK_Isik_Isiku_seisundi_liik  FOREIGN KEY ( isiku_seisundi_liik_kood ) REFERENCES  Isiku_seisundi_liik  ( isiku_seisundi_liik_kood ) ON DELETE No Action  ON UPDATE NO ACTION ,
+	CONSTRAINT  FK_Isik_Isiku_seisundi_liik  FOREIGN KEY ( isiku_seisundi_liik_kood ) REFERENCES  Isiku_seisundi_liik  ( isiku_seisundi_liik_kood ) ON DELETE No Action  ON UPDATE CASCADE ,
 	CONSTRAINT  FK_Isik_isikukoodi_riik  FOREIGN KEY ( riik_kood ) REFERENCES  Riik  ( riik_kood ) ON DELETE No Action ON UPDATE Cascade,
     CONSTRAINT AK_Isik_id_riik UNIQUE (isikukood, riik_kood),
     CONSTRAINT CHK_Isik_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
-    CONSTRAINT CHK_Isik_on_pere_voi_eesnimi CHECK ((perenimi IS NOT NULL OR eesnimi IS NOT NULL) AND (perenimi !~ '^[[:space:]]*$' OR eesnimi !~ '^[[:space:]]*$')),
+    CONSTRAINT CHK_Isik_pere_voi_eesnimi_not_null CHECK ( perenimi IS NOT NULL OR eesnimi IS NOT NULL ),
+    CONSTRAINT CHK_Isik_on_pere_voi_eesnimi CHECK (perenimi !~ '^[[:space:]]*$' OR eesnimi !~ '^[[:space:]]*$'),
     CONSTRAINT CHK_Isik_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_Isik_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  ),
     CONSTRAINT CHK_Isik_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$'),
@@ -204,7 +205,7 @@ CREATE TABLE  Kasutajakonto
     parool  varchar(50)	 NOT NULL,
 	 on_aktiivne  boolean DEFAULT TRUE NOT NULL,
 	CONSTRAINT  PK_Kasutajakonto  PRIMARY KEY ( isik_id ),
-	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE NO ACTION ON UPDATE NO ACTION ,
+	CONSTRAINT  FK_Kasutajakonto_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE NO ACTION ,
 	CONSTRAINT CHK_Kasutajakonto_parool_ei_ole_tyhi CHECK ( parool !~ '^[[:space:]]*$')
 )
 ;
@@ -231,7 +232,7 @@ CREATE TABLE  Laadimispunkt
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  aeg DEFAULT LOCALTIMESTAMP(0),
 	 registreerija_id  bigint NOT NULL,
-	 laadimispunkti_seisundi_liik_kood  smallint DEFAULT 0 NOT NULL,
+	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL,
      laadimispunkti_tyyp_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkt  PRIMARY KEY ( Laadimispunkti_kood ),
 	CONSTRAINT  CHK_Laadimispunkt_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
@@ -247,7 +248,7 @@ CREATE TABLE  Klient
 (
     isik_id  bigint NOT NULL,
     on_nous_tylitamisega  boolean DEFAULT FALSE NOT NULL,
-     kliendi_seisundi_liik_kood  smallint NOT NULL DEFAULT 0,
+     kliendi_seisundi_liik_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Klient  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Klient_Kliendi_seisundi_liik  FOREIGN KEY ( kliendi_seisundi_liik_kood ) REFERENCES  Kliendi_seisundi_liik  ( kliendi_seisundi_liik_kood ) ON DELETE No Action ON UPDATE CASCADE ,
 	CONSTRAINT  FK_Klient_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE  ON UPDATE NO ACTION
@@ -303,5 +304,5 @@ CREATE INDEX  IXFK_Laadimispunkt_Tootaja  ON  Laadimispunkt  ( registreerija_id 
 CREATE INDEX  IXFK_Laadimispunkti_kategooria_omamine_Laadimispunkt  ON  Laadimispunkti_kategooria_omamine  ( Laadimispunkti_kood  ASC)
 ;
 
-CREATE UNIQUE INDEX email_unq_idx ON isik (lower(e_meil))
+CREATE UNIQUE INDEX IXFK_Isik_email_unq_idx ON isik (lower(e_meil))
 ;

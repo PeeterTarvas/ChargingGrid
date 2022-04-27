@@ -76,25 +76,43 @@ INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispu
 VALUES (2, 'Tavalaadija', 1);
 
 INSERT INTO laadimispunkti_kategooria_tyyp(laadimispunkti_kategooria_tyyp_kood, laadimispunkti_kategooria_tyyp_nimetus)
-VALUES (2, 'Laadimisparkla suurus');
+VALUES (2, 'Laadimispesa tüüp');
 
 INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
-VALUES (3, 'Väike laadimisparkla', 2);
+VALUES (3, 'Mennekes (type 2)', 2);
 
 INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
-VALUES (4, 'Keskmine laadimisparkla', 2);
+VALUES (4, 'CCS2', 2);
 
 INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
-VALUES (5, 'Suur laadimisparkla', 2);
+VALUES (5, 'CB/T', 2);
+
+INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES (6, 'CHAdeMO', 2);
+
+INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES (7, 'J1772 (Type 1)', 2);
+
+INSERT INTO laadimispunkti_kategooria(laadimispunkti_kategooria_kood, laadimispunkti_kategooria_nimetus, laadimispunkti_kategooria_tyyp_kood)
+VALUES (8, 'CCS1', 2);
 
 INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
 VALUES (1, 1);
 
 INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (1, 2);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
 VALUES (1, 3);
 
 INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (1, 6);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
 VALUES (2, 2);
+
+INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
+VALUES (2, 3);
 
 INSERT INTO laadimispunkti_kategooria_omamine(laadimispunkti_kood, laadimispunkti_kategooria_kood)
 VALUES (2, 4);

@@ -257,8 +257,8 @@ CREATE TABLE  Klient
 
 CREATE TABLE  Laadimispunkti_kategooria_omamine 
 (
-	 Laadimispunkti_kood  bigint NOT NULL,
-     laadimispunkti_kategooria_kood  smallint NOT NULL,
+	Laadimispunkti_kood  bigint NOT NULL,
+    laadimispunkti_kategooria_kood  smallint NOT NULL,
 	CONSTRAINT  PK_Laadimispunkti_kategooria_omamine  PRIMARY KEY ( Laadimispunkti_kood , laadimispunkti_kategooria_kood ),
 	CONSTRAINT FK_Laadimispunkti_kategooria_omamine_Laadimispunkti_kood FOREIGN KEY (Laadimispunkti_kood) REFERENCES laadimispunkt(laadimispunkti_kood) ON UPDATE CASCADE ,
 	CONSTRAINT FK_Laadimispunkti_kategooria_omamine_kategooria_kood FOREIGN KEY (laadimispunkti_kategooria_kood) REFERENCES laadimispunkti_kategooria(laadimispunkti_kategooria_kood) ON UPDATE CASCADE

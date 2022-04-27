@@ -82,7 +82,7 @@ CREATE DOMAIN isikukood AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_t
 CREATE TABLE  Riik 
 (
 	 riik_kood  varchar(3) NOT NULL,
-	 riik_nimetus  varchar(60) UNIQUE  NOT NULL,
+	 riik_nimetus  varchar(60) NOT NULL,
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_Riik_kood_on_oige CHECK ( riik_kood ~ '[A-Z]{3}'),
      CONSTRAINT CHK_Riik_riik_nimetus_ei_ole_tyhi CHECK ( riik_nimetus !~ '^[[:space:]]*$'),

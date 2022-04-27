@@ -7,9 +7,11 @@ import andmebaasid.projekt.repositories.LaadimispunktiSeisundiLiikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class KoondaruanneService {
@@ -29,6 +31,10 @@ public class KoondaruanneService {
             koondaruanneDTO.setLaadimispunktide_arv(laadimispunktid.getOrDefault(seisund.getLaadimispunkti_seisundi_liik_kood(), 0L));
             koondaruanded.add(koondaruanneDTO);
         }
-        return koondaruanded;
+        return koondaruanded
+                .stream()
+                .sorted(Comparator.comparingLong(KoondaruanneDTO::getLaadimispunktide_arv).reversed()
+                        .thenComparing(KoondaruanneDTO::getNimetus))
+                .collect(Collectors.toList());
     }
 }

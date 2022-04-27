@@ -26,11 +26,11 @@ INSERT INTO tootaja_roll(tootaja_roll_kood, kirjeldus, tootaja_roll_nimetus)
 
 
 
-INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood, kWh)
-VALUES (0, 20);
+INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood, nimetus, kWh)
+VALUES (0,'tavaline', 20);
 
-INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood, kWh)
-VALUES (1, 40);
+INSERT INTO laadimispunkti_tyyp(laadimispunkti_tyyp_kood,nimetus, kWh)
+VALUES (1, 'kiir',40);
 
 INSERT INTO isik(isikukood, reg_aeg, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
 VALUES ('1a-b1/1+1', default,  '30-09-1999'::date, 'Peeter', 'Tarvas', 'Afganistaan', 'peetertarvas@gmail.com', 'EST', 0);
@@ -38,8 +38,8 @@ VALUES ('1a-b1/1+1', default,  '30-09-1999'::date, 'Peeter', 'Tarvas', 'Afganist
 INSERT INTO isik(isikukood,reg_aeg,  synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
 VALUES ('11111112',default, '29-09-1999'::date, 'Rahul', 'Kersna', 'Kehra', 'veetertarvas@gmail.com', 'EST', 0);
 
-INSERT INTO isik(isikukood,reg_aeg, synni_kp, eesnimi, perenimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
-VALUES ('11111113',default, '29-09-1999'::date, 'Eeter', '', 'Kehra', 'eetertarvas@gmail.com', 'EST', 0);
+INSERT INTO isik(isikukood,reg_aeg, synni_kp, eesnimi, elukoht, e_meil, riik_kood, isiku_seisundi_liik_kood)
+VALUES ('11111113',default, '29-09-1999'::date, 'Eeter', 'Kehra', 'eetertarvas@gmail.com', 'EST', 0);
 
 
 INSERT INTO Tootaja(isik_id, tootaja_seisundi_liik_kood)

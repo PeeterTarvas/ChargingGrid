@@ -283,7 +283,7 @@ CREATE TABLE  Tootaja_rolli_omamine
     tootaja_roll_kood  smallint NOT NULL,
 	 isik_id  bigint NOT NULL,
 	CONSTRAINT  PK_Tootaja_rolli_omamine_id  PRIMARY KEY ( tootaja_rolli_omamine_id ),
-	CONSTRAINT  FK_Tootaja_rolli_omamine_Tootaja_roll  FOREIGN KEY ( tootaja_roll_kood ) REFERENCES  Tootaja_roll  ( tootaja_roll_kood ) ON DELETE No Action ON UPDATE NO ACTION ,
+	CONSTRAINT  FK_Tootaja_rolli_omamine_Tootaja_roll  FOREIGN KEY ( tootaja_roll_kood ) REFERENCES  Tootaja_roll  ( tootaja_roll_kood ) ON DELETE No Action ON UPDATE CASCADE,
 	CONSTRAINT  FK_Tootaja_rolli_omamine_Tootaja  FOREIGN KEY ( isik_id ) REFERENCES  Tootaja  ( isik_id ) ON DELETE CASCADE ON UPDATE NO ACTION ,
 	CONSTRAINT CHK_Tootaja_rolli_omamine_lopp_on_suurem_algusest CHECK ( lopu_aeg > alguse_aeg ),
 	CONSTRAINT AK_Tootaja_rolli_omamine_ei_saa_sama_algatada UNIQUE (isik_id, tootaja_roll_kood, alguse_aeg)

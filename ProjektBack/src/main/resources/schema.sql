@@ -226,7 +226,7 @@ CREATE TABLE  Tootaja
     tootaja_seisundi_liik_kood  smallint NOT NULL DEFAULT 0,
 	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
-	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE NO action ,
+	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE CASCADE,
 	CONSTRAINT  FK_Tootaja_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE ON UPDATE NO ACTION ,
 	CONSTRAINT  FK_Tootaja_Mentor  FOREIGN KEY ( Mentor ) REFERENCES  Tootaja  ( isik_id ) ON DELETE SET NULL ON UPDATE No Action,
     CONSTRAINT CHK_Tootaja_isik_ja_mentor_ei_ole_samad CHECK( isik_id != mentor )
@@ -249,7 +249,7 @@ CREATE TABLE  Laadimispunkt
 	CONSTRAINT  CHK_Laadimispunkt_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),
 	CONSTRAINT  FK_Laadimispunkt_Laadimispunkti_tyyp  FOREIGN KEY ( laadimispunkti_tyyp_kood ) REFERENCES  Laadimispunkti_tyyp  ( laadimispunkti_tyyp_kood ) ON DELETE No Action ON UPDATE CASCADE ,
     CONSTRAINT FK_Laadimispunkt_registreerija_id FOREIGN KEY (registreerija_id) REFERENCES tootaja(isik_id),
-    CONSTRAINT FK_Laadimispunkt_laadiimis_seisundi_liik_kood FOREIGN KEY (laadimispunkti_seisundi_liik_kood) REFERENCES laadimispunkti_seisundi_liik(laadimispunkti_seisundi_liik_kood),
+    CONSTRAINT FK_Laadimispunkt_laadiimis_seisundi_liik_kood FOREIGN KEY (laadimispunkti_seisundi_liik_kood) REFERENCES laadimispunkti_seisundi_liik(laadimispunkti_seisundi_liik_kood)  ON UPDATE CASCADE,
     CONSTRAINT AK_Laadimispunkt_laadimimispunkkti_nimi UNIQUE(laadimispunkti_nimetus)
 )
 ;

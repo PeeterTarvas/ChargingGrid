@@ -69,12 +69,12 @@ DROP DOMAIN IF EXISTS isikukood CASCADE ;
 CREATE DOMAIN aeg AS TIMESTAMP(0)WITHOUT TIME ZONE NOT NULL DEFAULT LOCALTIMESTAMP(0) CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
     AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
 
-CREATE DOMAIN aeg_default_infinity AS TIMESTAMP(0) DEFAULT 'infinity'::timestamp without time zone CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
+CREATE DOMAIN aeg_default_infinity AS TIMESTAMP(0) NOT NULL DEFAULT 'infinity'::timestamp without time zone CONSTRAINT CHK_aeg_on_maaratud_ajavahemikus_default_infinity CHECK ( VALUE BETWEEN To_Timestamp('01-01-2010 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
     AND To_Timestamp('31.12.2100 23:59:59', 'DD-MM-YYYY HH24:MI:SS'));
 
 CREATE DOMAIN nimetus AS varchar(50) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK ( VALUE !~ '^[[:space:]]*$');
 
-CREATE DOMAIN isikukood AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK ( VALUE !~ '^[[:space:]]*$');
+CREATE DOMAIN isikukood AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi_isikukood CHECK ( VALUE !~ '^[[:space:]]*$');
 
 
 /* Create Tables */
@@ -86,7 +86,7 @@ CREATE TABLE  Riik
 	CONSTRAINT  PK_Riik  PRIMARY KEY ( riik_kood ),
 	CONSTRAINT CHK_Riik_kood_on_oige CHECK ( riik_kood ~ '[A-Z]{3}'),
      CONSTRAINT CHK_Riik_riik_nimetus_ei_ole_tyhi CHECK ( riik_nimetus !~ '^[[:space:]]*$'),
-     CONSTRAINT AK_riik_nimetus UNIQUE(riik_kood)
+     CONSTRAINT AK_riik_nimetus UNIQUE(riik_nimetus)
 )
 ;
 
@@ -201,9 +201,9 @@ CREATE TABLE  Isik
     CONSTRAINT AK_Isik_id_riik UNIQUE (isikukood, riik_kood),
     CONSTRAINT CHK_Isik_on_oige_email CHECK (e_meil ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     CONSTRAINT CHK_Isik_pere_voi_eesnimi_not_null CHECK ( perenimi IS NOT NULL OR eesnimi IS NOT NULL ),
-    CONSTRAINT CHK_Isik_on_pere_voi_eesnimi CHECK (perenimi !~ '^[[:space:]]*$' AND eesnimi !~ '^[[:space:]]*$'),
+    CONSTRAINT CHK_Isik_nimi_ei_ole_tyhi_strting CHECK (perenimi !~ '^[[:space:]]*$' AND eesnimi !~ '^[[:space:]]*$'),
     CONSTRAINT CHK_Isik_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
-    CONSTRAINT CHK_Isik_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date > synni_kp  ),
+    CONSTRAINT CHK_Isik_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date >= synni_kp  ),
     CONSTRAINT CHK_Isik_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$'),
     CONSTRAINT CHK_Isik_isikukood_oigsus CHECK (isikukood ~ '^[[:alnum:] /+=-]+$')
 )
@@ -223,7 +223,7 @@ CREATE TABLE  Kasutajakonto
 CREATE TABLE  Tootaja 
 (
     isik_id  bigint NOT NULL,
-    tootaja_seisundi_liik_kood  smallint NOT NULL,
+    tootaja_seisundi_liik_kood  smallint NOT NULL DEFAULT 0,
 	 Mentor  bigint,
 	CONSTRAINT  PK_Tootaja  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Tootaja_Tootaja_seisundi_liik  FOREIGN KEY ( tootaja_seisundi_liik_kood ) REFERENCES  Tootaja_seisundi_liik  ( tootaja_seisundi_liik_kood ) ON DELETE No Action ON UPDATE NO action ,
@@ -238,7 +238,7 @@ CREATE TABLE  Laadimispunkt
 
      Laadimispunkti_kood  bigint NOT NULL,
      laiuskraad  decimal(10,4) NOT NULL,
-	 laadimispunkti_nimetus  nimetus NOT NULL,
+	 laadimispunkti_nimetus  nimetus,
 	 pikkuskraad  decimal(10,4) NOT NULL,
 	 reg_aeg  aeg,
 	 registreerija_id  bigint NOT NULL,
@@ -258,7 +258,7 @@ CREATE TABLE  Klient
 (
     isik_id  bigint NOT NULL,
     on_nous_tylitamisega  boolean DEFAULT FALSE NOT NULL,
-     kliendi_seisundi_liik_kood  smallint NOT NULL,
+     kliendi_seisundi_liik_kood  smallint NOT NULL DEFAULT 0,
 	CONSTRAINT  PK_Klient  PRIMARY KEY ( isik_id ),
 	CONSTRAINT  FK_Klient_Kliendi_seisundi_liik  FOREIGN KEY ( kliendi_seisundi_liik_kood ) REFERENCES  Kliendi_seisundi_liik  ( kliendi_seisundi_liik_kood ) ON DELETE No Action ON UPDATE CASCADE ,
 	CONSTRAINT  FK_Klient_Isik  FOREIGN KEY ( isik_id ) REFERENCES  Isik  ( isik_id ) ON DELETE CASCADE  ON UPDATE NO ACTION
@@ -280,14 +280,13 @@ CREATE TABLE  Tootaja_rolli_omamine
     tootaja_rolli_omamine_id  bigserial NOT NULL,
     alguse_aeg  aeg,
 	 lopu_aeg  aeg_default_infinity,
-    tootaja_roll_kood  bigint NOT NULL,
+    tootaja_roll_kood  smallint NOT NULL,
 	 isik_id  bigint NOT NULL,
 	CONSTRAINT  PK_Tootaja_rolli_omamine_id  PRIMARY KEY ( tootaja_rolli_omamine_id ),
 	CONSTRAINT  FK_Tootaja_rolli_omamine_Tootaja_roll  FOREIGN KEY ( tootaja_roll_kood ) REFERENCES  Tootaja_roll  ( tootaja_roll_kood ) ON DELETE No Action ON UPDATE NO ACTION ,
 	CONSTRAINT  FK_Tootaja_rolli_omamine_Tootaja  FOREIGN KEY ( isik_id ) REFERENCES  Tootaja  ( isik_id ) ON DELETE CASCADE ON UPDATE NO ACTION ,
 	CONSTRAINT CHK_Tootaja_rolli_omamine_lopp_on_suurem_algusest CHECK ( lopu_aeg > alguse_aeg ),
-	CONSTRAINT AK_Tootaja_rolli_omamine_ei_saa_sama_algatada UNIQUE (isik_id, tootaja_rolli_omamine_id, alguse_aeg)
-
+	CONSTRAINT AK_Tootaja_rolli_omamine_ei_saa_sama_algatada UNIQUE (isik_id, tootaja_roll_kood, alguse_aeg)
 
 
 

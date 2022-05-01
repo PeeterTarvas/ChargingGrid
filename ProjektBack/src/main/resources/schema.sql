@@ -74,7 +74,7 @@ CREATE DOMAIN aeg_default_infinity AS TIMESTAMP(0) NOT NULL DEFAULT 'infinity'::
 
 CREATE DOMAIN nimetus AS varchar(50) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi CHECK ( VALUE !~ '^[[:space:]]*$');
 
-CREATE DOMAIN isikukood AS varchar(255) NOT NULL CONSTRAINT CHK_nimetus_ei_ole_tyhi_isikukood CHECK ( VALUE !~ '^[[:space:]]*$');
+CREATE DOMAIN isikukood AS varchar(255) NOT NULL CONSTRAINT CHK_isikukood_on_oige CHECK ( VALUE !~ '^[[:space:]]*$' AND VALUE ~ '^[[:alnum:] /+=-]+$');
 
 
 /* Create Tables */
@@ -204,8 +204,7 @@ CREATE TABLE  Isik
     CONSTRAINT CHK_Isik_nimi_ei_ole_tyhi_strting CHECK (perenimi !~ '^[[:space:]]*$' AND eesnimi !~ '^[[:space:]]*$'),
     CONSTRAINT CHK_Isik_synni_kp CHECK ( (synni_kp BETWEEN To_DATE('01-01-1900', 'DD-MM-YYYY') AND To_DATE('31-12-2100', 'DD-MM-YYYY'))),
     CONSTRAINT CHK_Isik_synnikp_ei_ole_suurem_reg_ajast CHECK ( reg_aeg::date >= synni_kp  ),
-    CONSTRAINT CHK_Isik_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$'),
-    CONSTRAINT CHK_Isik_isikukood_oigsus CHECK (isikukood ~ '^[[:alnum:] /+=-]+$')
+    CONSTRAINT CHK_Isik_elukoht_ei_tohi_olla_tyhi_ega_ainult_numbrid CHECK ( elukoht !~ '^[[:space:]]*$' AND elukoht !~ '^[0-9]+$')
 )
 ;
 

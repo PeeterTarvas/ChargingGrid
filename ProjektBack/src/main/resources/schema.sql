@@ -242,7 +242,7 @@ CREATE TABLE  Laadimispunkt
 	 reg_aeg  aeg,
 	 registreerija_id  bigint NOT NULL,
 	 laadimispunkti_seisundi_liik_kood  smallint NOT NULL DEFAULT 0,
-     laadimispunkti_tyyp_kood  smallint NOT NULL,
+     laadimispunkti_tyyp_kood  smallint NOT NULL DEFAULT 0,
 	CONSTRAINT  PK_Laadimispunkt  PRIMARY KEY ( Laadimispunkti_kood ),
 	CONSTRAINT  CHK_Laadimispunkt_kehtiv_laiuskraad  CHECK (laiuskraad BETWEEN -180 AND 180),
 	CONSTRAINT  CHK_Laadimispunkt_kehtiv_pikkuskraad  CHECK (pikkuskraad BETWEEN -90 AND 90),

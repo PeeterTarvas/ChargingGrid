@@ -1,5 +1,9 @@
 package exam.overlappingintervals;
 
+
+// import ee.ttu.java.studenttester.annotations.TestContextConfiguration;
+
+
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -45,6 +49,14 @@ public class PopularLettersTest {
                 , List.of("c", "d"));
         assertEquals(popularLettersSolution(List.of(List.of("s", "p"), List.of("s", "p"))), List.of("p", "q", "r", "s"));
         assertEquals(popularLettersSolution(List.of(List.of("z", "a"))), List.of("abcdefghijklmnopqrstuvwxyz".split("")));
+    }
+
+    @Test(timeOut = 1000)
+    public void testPopularLettersBothWaysInput() {
+        assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t"));
+        assertEquals(popularLettersSolution(List.of(List.of("f", "i"), List.of("h", "h") , List.of("i", "f"))), List.of("h"));
+        //assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t")); siia teste juurde
+        //assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t"));
     }
 
     @Test(timeOut = 1000)
@@ -113,15 +125,9 @@ public class PopularLettersTest {
             answer.add(testingAlphabetHashMapIntStr.get(sortedEntry.get(firstIndex).getKey()));
             firstIndex++;
         }
-        System.out.println(answer);
         return answer;
 
     }
 
-    public static void main(String[] args) {
-        PopularLettersTest op = new PopularLettersTest();
-        //System.out.println(op.popularLettersSolution(List.of(List.of("a","c"), List.of("a","d"), List.of("f","g"), List.of("z","d"))));
-        //System.out.println(op.popularLettersSolution(List.of(List.of("z","a"))));
-    }
 
 }

@@ -13,16 +13,16 @@ public class FrequencyOfNumbersTest {
 
     @Test(timeOut = 1000)
    public void testFrequencyBasedSortSimple (){
-       assertEquals(frequencyBasedSortSolved("1,2"), List.of(2,1));
-       assertEquals(frequencyBasedSortSolved("5,6,7,8,5"), List.of(5,5,8,7,6));
-       assertEquals(frequencyBasedSortSolved("1,2,3,4,5,6,7,8,9,10,11,12,13,14,1,2,11,5,100,1,11"), List.of(11, 11, 11, 1, 1, 1, 5, 5, 2, 2, 100, 14, 13, 12, 10, 9, 8, 7, 6, 4, 3));
+       assertEquals(Exam.frequencyBasedSort("1,2"), List.of(2,1));
+       assertEquals(Exam.frequencyBasedSort("5,6,7,8,5"), List.of(5,5,8,7,6));
+       assertEquals(Exam.frequencyBasedSort("1,2,3,4,5,6,7,8,9,10,11,12,13,14,1,2,11,5,100,1,11"), List.of(11, 11, 11, 1, 1, 1, 5, 5, 2, 2, 100, 14, 13, 12, 10, 9, 8, 7, 6, 4, 3));
    }
 
     @Test(timeOut = 1000)
    public void testFrequencyBasedSortMultipleMaximuxmFrequencyNumbers (){
-       assertEquals(frequencyBasedSortSolved("1,2,1,2,1,2,1,2,3,3,3,3"), List.of(3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1));
-       assertEquals(frequencyBasedSortSolved("5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6"), List.of(6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5));
-       assertEquals(frequencyBasedSortSolved("1,1,1,1,1,11,11,11,111,111,111,5,6,7,1111,1111,1111,1111,1111"), List.of(1111, 1111, 1111, 1111, 1111, 1, 1, 1, 1, 1, 111, 111, 111, 11, 11, 11, 7, 6, 5));
+       assertEquals(Exam.frequencyBasedSort("1,2,1,2,1,2,1,2,3,3,3,3"), List.of(3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1));
+       assertEquals(Exam.frequencyBasedSort("5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6"), List.of(6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5));
+       assertEquals(Exam.frequencyBasedSort("1,1,1,1,1,11,11,11,111,111,111,5,6,7,1111,1111,1111,1111,1111"), List.of(1111, 1111, 1111, 1111, 1111, 1, 1, 1, 1, 1, 111, 111, 111, 11, 11, 11, 7, 6, 5));
    }
 
     @Test(timeOut = 1000)
@@ -38,11 +38,11 @@ public class FrequencyOfNumbersTest {
     @Test(timeOut = 1000)
     public void testFrequencyBasedSortOnVeryLargeInput() {
         String input = generateRandomStringOfNumbers(1000);
-        assertEquals(frequencyBasedSortSolved(input), frequencyBasedSortSolved(input));
+        assertEquals(Exam.frequencyBasedSort(input), frequencyBasedSortSolved(input));
         input = generateRandomStringOfNumbers(10000);
-        assertEquals(frequencyBasedSortSolved(input), frequencyBasedSortSolved(input));
+        assertEquals(Exam.frequencyBasedSort(input), frequencyBasedSortSolved(input));
        input = generateRandomStringOfNumbers(100000);
-       assertEquals(frequencyBasedSortSolved(input), frequencyBasedSortSolved(input));
+       assertEquals(Exam.frequencyBasedSort(input), frequencyBasedSortSolved(input));
     }
 
 
@@ -52,8 +52,9 @@ public class FrequencyOfNumbersTest {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < size; i++) {
             str.append(random.nextInt(upperbound));
-            str.append(',');
+            str.append(','); // vt see yle veel
         }
+        System.out.println(str);
         return str.toString();
     }
 
@@ -91,20 +92,8 @@ public class FrequencyOfNumbersTest {
                 counter++;
             }
         }
-        System.out.println(answer);
         return answer;
     }
-
-    public static void main(String[] args) {
-        FrequencyOfNumbersTest frequencyOfNumbersTest = new FrequencyOfNumbersTest();
-        // "3,1" -> 1
-        // "3,3,2,4,5,1,5" -> 3
-        // "1,2,3,4,5,1,2,2,3,3,1" -> [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 5]
-        frequencyOfNumbersTest.frequencyBasedSortSolved("1,1,1,1,1,11,11,11,111,111,111,5,6,7,1111,1111,1111,1111,1111");
-    }
-
-
-
 
 
 }

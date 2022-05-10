@@ -6,6 +6,9 @@ Sisendis on ainult väiksed tähed ja me kasutame inglise tähestikku, et täpit
 On vaja leida kõige populaarsem(ad) tähed, mis esinevad nendes tähtede intervallides.
 Tagastada tuleb list tähest või kui on mitu sama populaarset tähte siis tähtedest, mis on sorteeritud tähestiku järgi kasvavalt.
 
+Vaata näiteid mallist.
+
+
 ```java
 /**
  * Method takes input as a nested list where each sublist contains a pair of letters that represents an interval.

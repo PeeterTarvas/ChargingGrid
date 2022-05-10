@@ -1,17 +1,18 @@
 package exam.overlappingintervals;
 
 
-// import ee.ttu.java.studenttester.annotations.TestContextConfiguration;
-
-
 import org.testng.annotations.Test;
-
+import ee.ttu.java.studenttester.annotations.Gradable;
+import ee.ttu.java.studenttester.annotations.TestContextConfiguration;
+import ee.ttu.java.studenttester.enums.ReportMode;
+import static ee.taltech.iti0202.exam.Exam.decodeMessage;
+import static org.testng.Assert.assertEquals;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertEquals;
 
 
+@TestContextConfiguration(mode = ReportMode.MAXVERBOSE, identifier = 3)
 public class PopularLettersTest {
     private HashMap<Integer, String> testingAlphabetHashMapIntStr;
     private HashMap<String, Integer> testingAlphabetHashMapStrInt;
@@ -32,31 +33,32 @@ public class PopularLettersTest {
 
     @Test(timeOut = 1000)
     public void testPopularLettersSimple() {
-        assertEquals(popularLettersSolution(List.of(List.of("a","a"))), List.of("a"));
-        assertEquals(popularLettersSolution(List.of(List.of("x","z"))), List.of("x", "y", "z"));
-        assertEquals(popularLettersSolution(List.of(List.of("a","c"))), List.of("a", "b", "c"));
-        assertEquals(popularLettersSolution(List.of(List.of("a","c"), List.of("a","d"), List.of("a","d")))
+        assertEquals(Exam.popularLetters(List.of(List.of("a","a"))), List.of("a"));
+        assertEquals(Exam.popularLetters(List.of(List.of("x","z"))), List.of("x", "y", "z"));
+        assertEquals(Exam.popularLetters(List.of(List.of("a","c"))), List.of("a", "b", "c"));
+        assertEquals(Exam.popularLetters(List.of(List.of("a","c"), List.of("a","d"), List.of("a","d")))
                 , List.of("a", "b", "c"));
-        assertEquals(popularLettersSolution(List.of(List.of("p", "s"), List.of("p", "s"))), List.of("p", "q", "r", "s"));
-        assertEquals(popularLettersSolution(List.of(List.of("a", "z"))), List.of("abcdefghijklmnopqrstuvwxyz".split("")));
+        assertEquals(Exam.popularLetters(List.of(List.of("p", "s"), List.of("p", "s"))), List.of("p", "q", "r", "s"));
+        assertEquals(Exam.popularLetters(List.of(List.of("a", "z"))), List.of("abcdefghijklmnopqrstuvwxyz".split("")));
     }
 
     @Test(timeOut = 1000)
     public void testPopularLetterBackwardsInput() {
-        assertEquals(popularLettersSolution(List.of(List.of("z","x"))), List.of("x", "y", "z"));
-        assertEquals(popularLettersSolution(List.of(List.of("c","a"))), List.of("a", "b", "c"));
-        assertEquals(popularLettersSolution(List.of(List.of("c","f"), List.of("d","a"), List.of("d","a")))
+        assertEquals(Exam.popularLetters(List.of(List.of("z","x"))), List.of("x", "y", "z"));
+        assertEquals(Exam.popularLetters(List.of(List.of("c","a"))), List.of("a", "b", "c"));
+        assertEquals(Exam.popularLetters(List.of(List.of("c","f"), List.of("d","a"), List.of("d","a")))
                 , List.of("c", "d"));
-        assertEquals(popularLettersSolution(List.of(List.of("s", "p"), List.of("s", "p"))), List.of("p", "q", "r", "s"));
-        assertEquals(popularLettersSolution(List.of(List.of("z", "a"))), List.of("abcdefghijklmnopqrstuvwxyz".split("")));
+        assertEquals(Exam.popularLetters(List.of(List.of("s", "p"), List.of("s", "p"))), List.of("p", "q", "r", "s"));
+        assertEquals(Exam.popularLetters(List.of(List.of("z", "a"))), List.of("abcdefghijklmnopqrstuvwxyz".split("")));
     }
 
     @Test(timeOut = 1000)
     public void testPopularLettersBothWaysInput() {
-        assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t"));
-        assertEquals(popularLettersSolution(List.of(List.of("f", "i"), List.of("h", "h") , List.of("i", "f"))), List.of("h"));
-        //assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t")); siia teste juurde
-        //assertEquals(popularLettersSolution(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t"));
+        assertEquals(Exam.popularLetters(List.of(List.of("r", "t"), List.of("t", "r"))), List.of("r", "s", "t"));
+        assertEquals(Exam.popularLetters(List.of(List.of("f", "i"), List.of("h", "h") , List.of("i", "f"))), List.of("h"));
+        assertEquals(Exam.popularLetters(List.of(List.of("d", "f"), List.of("g", "f"))), List.of("f"));
+        assertEquals(Exam.popularLetters(List.of(List.of("p", "r"), List.of("s", "o"))), List.of("p", "q", "r"));
+        assertEquals(Exam.popularLetters(List.of(List.of("w", "x"), List.of("z", "y"), List.of("f", "x"), List.of("x", "f"))), List.of("w", "x"));
     }
 
     @Test(timeOut = 1000)
@@ -64,7 +66,7 @@ public class PopularLettersTest {
         int inputSize = 10;
         List<List<String>> inpt = generateRandomTestInputs(inputSize);
         for (int i = 0; i < 8; i++) {
-            assertEquals(popularLettersSolution(inpt), popularLettersSolution(inpt));
+            assertEquals(Exam.popularLetters(inpt), popularLettersSolution(inpt));
             inputSize += 5;
             inpt = generateRandomTestInputs(inputSize);
         }
@@ -75,7 +77,7 @@ public class PopularLettersTest {
         int inputSize = 10;
         List<List<String>> inpt = generateRandomTestInputs(inputSize);
         for (int i = 0; i < 5; i++) {
-            assertEquals(popularLettersSolution(inpt), popularLettersSolution(inpt));
+            assertEquals(Exam.popularLetters(inpt), popularLettersSolution(inpt));
             inputSize *= 10;
             inpt = generateRandomTestInputs(inputSize);
         }
@@ -84,7 +86,6 @@ public class PopularLettersTest {
     public List<String> generateRandomString() {
         Random rnd = new Random();
         return List.of(testingAlphabetHashMapIntStr.get(rnd.nextInt(26)), testingAlphabetHashMapIntStr.get(rnd.nextInt(26)));
-
     }
 
     public List<List<String>> generateRandomTestInputs(int inputSize) {
